@@ -1,0 +1,12 @@
+﻿<a href="@Href" class="text-gray-300 hover:bg-gray-700 hover:text-white @(IsBlock?"block":"") px-3 py-2 rounded-md text-sm font-medium">@Text</a>
+
+@code {
+
+    [Parameter]
+    public string Text { get; set; }
+    [Parameter]
+    public string Href { get; set; }
+    [Parameter]
+    public bool IsBlock { get; set; }
+
+}
