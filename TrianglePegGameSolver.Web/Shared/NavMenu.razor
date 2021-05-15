@@ -1,20 +1,20 @@
-﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">TrianglePegGameSolver.Web</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
+﻿<div class="pl-4">
+    <a href="">TrianglePegGameSolver.Web</a>
+    <button @onclick="ToggleNavMenu">
+        <MenuIcon class="h-5 w-5 text-blue-500" />
     </button>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+    <ul>
+        <li class="px-3">
+            <NavLink href="" Match="NavLinkMatch.All">
+                <HomeIcon class="h-5 w-5 text-blue-500" /> Home
             </NavLink>
         </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
+        <li class="px-3">
+            <NavLink href="counter">
+                <PlusIcon class="h-5 w-5 text-blue-500" /> Counter
             </NavLink>
         </li>
     </ul>
@@ -23,7 +23,7 @@
 @code {
     private bool collapseNavMenu = true;
 
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string NavMenuCssClass => collapseNavMenu ? "hidden" : null;
 
     private void ToggleNavMenu()
     {

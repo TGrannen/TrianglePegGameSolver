@@ -21,3 +21,7 @@ The following command will be run to generate a production css file with any unu
 ``` bash
 gulp css:prod
 ```
+
+## Iconography
+
+[HeroIcons](https://heroicons.com/) are used for Iconography. They can be used as Razor components provided by this package: [HeroIcons.Blazor](https://github.com/duaneedwards/heroicons/tree/master/blazor#readme)
