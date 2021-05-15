@@ -1,32 +1,41 @@
-﻿<div class="pl-4">
-    <a href="">TrianglePegGameSolver.Web</a>
-    <button @onclick="ToggleNavMenu">
-        <MenuIcon class="h-5 w-5 text-blue-500" />
-    </button>
-</div>
+﻿@using TrianglePegGameSolver.Web.Shared.Components
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul>
-        <li class="px-3">
-            <NavLink href="" Match="NavLinkMatch.All">
-                <HomeIcon class="h-5 w-5 text-blue-500" /> Home
-            </NavLink>
-        </li>
-        <li class="px-3">
-            <NavLink href="counter">
-                <PlusIcon class="h-5 w-5 text-blue-500" /> Counter
-            </NavLink>
-        </li>
-    </ul>
-</div>
+<nav class="bg-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex items-center">
+                <div class="flex-shrink-0">
+                    <div class="h-8 w-8">
+                        <Logo></Logo>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <NavigationLink Href="#" Text="Home"></NavigationLink>
+                        <NavigationLink Href="counter" Text="Counter"></NavigationLink>
+                        <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true"></NavigationLink>
+                    </div>
+                </div>
+            </div>
+            <div class="-mr-2 flex md:hidden">
+                <!-- Mobile menu button -->
+                <MenuButton @bind-ShowMenu="showMenu"></MenuButton>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="md:hidden" id="mobile-menu">
+        <div class="@NavMenuCssClass px-2 pt-2 pb-3 space-y-1 sm:px-3">
+            <NavigationLink Href="#" Text="Home" IsBlock="true"></NavigationLink>
+            <NavigationLink Href="counter" Text="Counter" IsBlock="true"></NavigationLink>
+            <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true"></NavigationLink>
+        </div>
+    </div>
+</nav>
 
 @code {
-    private bool collapseNavMenu = true;
+    private bool showMenu = false;
+    private string NavMenuCssClass => showMenu ? "block" : "hidden";
 
-    private string NavMenuCssClass => collapseNavMenu ? "hidden" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
 }
