@@ -1,0 +1,32 @@
+﻿<div class="pl-4">
+    <a href="">TrianglePegGameSolver.Web</a>
+    <button @onclick="ToggleNavMenu">
+        <MenuIcon class="h-5 w-5 text-blue-500" />
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul>
+        <li class="px-3">
+            <NavLink href="" Match="NavLinkMatch.All">
+                <HomeIcon class="h-5 w-5 text-blue-500" /> Home
+            </NavLink>
+        </li>
+        <li class="px-3">
+            <NavLink href="counter">
+                <PlusIcon class="h-5 w-5 text-blue-500" /> Counter
+            </NavLink>
+        </li>
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string NavMenuCssClass => collapseNavMenu ? "hidden" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
