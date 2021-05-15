@@ -9,7 +9,7 @@
                         <Logo></Logo>
                     </div>
                 </div>
-                <div class="hidden md:block">
+                <div class="hidden md:flex">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <NavigationLink Href="#" Text="Home"></NavigationLink>
                         <NavigationLink Href="counter" Text="Counter"></NavigationLink>
@@ -17,6 +17,9 @@
                     </div>
                 </div>
             </div>
+            <NavLink class="hidden md:block" href="https://github.com/TGrannen/TrianglePegGameSolver" target="_blank">
+                <img src="images/GitHub-Mark-Light-32px.png" alt="Image">
+            </NavLink>
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
                 <MenuButton @bind-ShowMenu="showMenu"></MenuButton>
@@ -24,8 +27,8 @@
         </div>
     </div>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="md:hidden" id="mobile-menu">
+    <!-- Mobile menu -->
+    <div class="md:hidden">
         <div class="@NavMenuCssClass px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <NavigationLink Href="#" Text="Home" IsBlock="true"></NavigationLink>
             <NavigationLink Href="counter" Text="Counter" IsBlock="true"></NavigationLink>
