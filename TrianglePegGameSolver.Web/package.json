@@ -1,15 +1,10 @@
 {
   "devDependencies": {
     "autoprefixer": "^9.7.4",
-    "gulp": "^4.0.2",
-    "gulp-clean-css": "^4.3.0",
-    "gulp-postcss": "^8.0.0",
-    "gulp-purgecss": "^4.0.3",
-    "gulp-sourcemaps": "^3.0.0",
     "precss": "^4.0.0",
-    "tailwindcss": "^2.0.1",
     "postcss": "^8.1.8",
-    "postcss-cli": "^8.3.0"
+    "postcss-cli": "^8.3.0",
+    "tailwindcss": "^2.0.1"
   },
   "scripts": {
     "build-css-dev": "tailwindcss build Styles/site.css -o wwwroot/css/site.css -c tailwind.config.js",
