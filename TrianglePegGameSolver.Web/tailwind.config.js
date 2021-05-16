@@ -1,15 +1,16 @@
-﻿module.exports = {
-    theme: {
-        extend: {
-            colors: {
-                blazoredorange: '#ff6600'
-            }
-        }
+module.exports = {
+  future: {
+    // removeDeprecatedGapUtilities: true,
+    purgeLayersByDefault: true,
+  },
+  purge: ['**/*.html', '**/*.razor'],
+  theme: {
+    extend: {
+      colors: {
+        blazoredorange: '#ff6600',
+      },
     },
-    purge: {
-        layers: ['components', 'utilities'],
-        options: {
-            safelist: ['md\\:block', 'md\\:hidden']
-        }
-    }
+  },
+  variants: {},
+  plugins: [],
 };

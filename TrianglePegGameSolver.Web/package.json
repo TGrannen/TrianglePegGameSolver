@@ -7,6 +7,15 @@
     "gulp-purgecss": "^4.0.3",
     "gulp-sourcemaps": "^3.0.0",
     "precss": "^4.0.0",
-    "tailwindcss": "^1.2.0"
+    "tailwindcss": "^2.0.1",
+    "postcss": "^8.1.8",
+    "postcss-cli": "^8.3.0"
+  },
+  "scripts": {
+    "build-css-dev": "tailwindcss build Styles/site.css -o wwwroot/css/site.css -c tailwind.config.js",
+    "build-css-prod": "cross-env NODE_ENV=production tailwindcss build Styles/site.css -o wwwroot/css/site.css -c tailwind.config.js"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }
