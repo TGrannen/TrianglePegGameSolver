@@ -4,7 +4,12 @@
     <TargetFramework>net5.0</TargetFramework>
     <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
-
+  <!-- <Target Name="BuildCssDev" Condition="'$(Configuration)' == 'Debug'" BeforeTargets="Build">
+    <Exec Command="npm run build-css-dev" />
+  </Target> -->
+  <Target Name="BuildCssProd" Condition="'$(Configuration)' == 'Release'" BeforeTargets="Build">
+    <Exec Command="npm run build-css-prod" />
+  </Target>
   <ItemGroup>
     <PackageReference Include="Fluxor.Blazor.Web" Version="4.1.0" />
     <PackageReference Include="Fluxor.Blazor.Web.ReduxDevTools" Version="4.1.0" />

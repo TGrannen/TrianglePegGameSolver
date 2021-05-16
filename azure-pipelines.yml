@@ -26,12 +26,6 @@ stages:
           command: 'install'
           workingDir: '$(webProjectName)'
 
-      - task: gulp@1
-        displayName: 'Running Gulp tasks'
-        inputs:
-          gulpFile: '$(webProjectName)/gulpfile.js' 
-          targets: css:prod
-
       - task: DotNetCoreCLI@2
         displayName: 'Publishing App'
         inputs:

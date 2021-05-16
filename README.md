@@ -8,18 +8,19 @@ Blazor WASM PWA to show how to solve the [Triangle Peg Game](https://www.google.
 
 * [Part 1](https://chrissainty.com/integrating-tailwind-css-with-blazor-using-gulp-part-1/)
 * [Part 2](https://chrissainty.com/integrating-tailwind-css-with-blazor-using-gulp-part-2/)
+* [Blazor and TailwindCSS](https://codejuration.com/blog/2020/11/blazor-tailwind/)
 
 To regenerate the css file to include any changes to tailwind, run the following commands:
 
 ``` bash
 npm install
-gulp css:dev
+npm run build-css-dev
 ```
 
 The following command will be run to generate a production css file with any unused styles removed and tailwind css minified
 
 ``` bash
-gulp css:prod
+npm run build-css-prod
 ```
 
 ## Iconography
