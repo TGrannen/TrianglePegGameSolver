@@ -1,0 +1,84 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+- name: webProjectName
+  value: TrianglePegGameSolver.Web
+- name: buildArtifact
+  value: WebApp
+
+stages:
+ - stage: Build
+   jobs:
+   - job: Build
+     steps:
+      - task: Npm@1
+        displayName: 'Running NPM Install'
+        inputs:
+          command: 'install'
+          workingDir: '$(webProjectName)'
+
+      - task: gulp@1
+        displayName: 'Running Gulp tasks'
+        inputs:
+          gulpFile: '$(webProjectName)/gulpfile.js' 
+          targets: css:prod
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Publishing App'
+        inputs:
+          command: 'publish'
+          publishWebProjects: true
+          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/temp'
+          zipAfterPublish: false
+          modifyOutputPath: false
+
+      - task: CopyFiles@2
+        displayName: 'Copy just the necessary files to the artifact staging directory'
+        inputs:
+          SourceFolder: '$(Build.ArtifactStagingDirectory)/temp/wwwroot'
+          Contents: |
+            **
+            !*.br
+            !*.gz
+            !**/*.br
+            !**/*.gz
+          TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+      - task: DeleteFiles@1
+        displayName: 'Delete Temp Files'
+        inputs:
+          SourceFolder: '$(Build.ArtifactStagingDirectory)'
+          Contents: 'temp'
+
+      - publish: '$(Build.ArtifactStagingDirectory)'
+        displayName: 'Publishing Build Artifacts'
+        artifact: $(buildArtifact)
+
+ - stage: Deploy
+   jobs:
+   - deployment: prod
+     pool:
+       vmImage: vs2017-win2016
+     displayName: 'Deploy to Production'
+     environment: production
+     strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: AzureFileCopy@4
+              displayName: 'AzureBlob File Copy'
+              inputs:
+                SourcePath: $(Pipeline.Workspace)/$(buildArtifact)/*
+                azureSubscription: '$(azureSubscription)'
+                Destination: AzureBlob
+                storage: $(azureStorageAccount)
+                ContainerName: '$web'
