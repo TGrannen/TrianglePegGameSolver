@@ -3,7 +3,14 @@ module.exports = {
     // removeDeprecatedGapUtilities: true,
     purgeLayersByDefault: true,
   },
-  purge: ['**/*.html', '**/*.razor'],
+  purge: {
+    content: ['**/*.html', '**/*.razor'],
+
+    // These options are passed through directly to PurgeCSS
+    options: {
+      safelist: ['md:hidden', 'md:block'],
+    },
+  },
   theme: {
     extend: {
       colors: {
