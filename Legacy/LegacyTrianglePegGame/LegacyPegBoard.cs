@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace LegacyTrianglePegGame
 {
-    public class PegBoard
+    public class LegacyPegBoard
     {
-        public PegLocation[,] boardArray;
+        public LegacyPegLocation[,] boardArray;
         public int pegsLeft = 14;
 
         public void InitBoard()
         {
-            boardArray = new PegLocation[5, 5];
-            PegLocation temp = null;
+            boardArray = new LegacyPegLocation[5, 5];
+            LegacyPegLocation temp = null;
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    temp = new PegLocation();
-                    temp.location = new PegHole(i, j);
+                    temp = new LegacyPegLocation();
+                    temp.location = new LegacyPegHole(i, j);
                     switch (j)
                     {
                         case 0:
@@ -78,7 +78,7 @@ namespace LegacyTrianglePegGame
             }
         }
 
-        private void InitJumpLocationsForLoc(PegLocation loc)
+        private void InitJumpLocationsForLoc(LegacyPegLocation loc)
         {
             int row = loc.location.row;
             TestRow(row, loc);
@@ -86,7 +86,7 @@ namespace LegacyTrianglePegGame
             TestRow(row + 2, loc);
         }
 
-        private void TestRow(int row, PegLocation origLoc)
+        private void TestRow(int row, LegacyPegLocation origLoc)
         {
             int column = origLoc.location.col - 2;
             TestAndAddJumpLocation(origLoc, row, column);
@@ -98,7 +98,7 @@ namespace LegacyTrianglePegGame
             TestAndAddJumpLocation(origLoc, row, column);
         }
 
-        private void TestAndAddJumpLocation(PegLocation origLoc, int row, int column)
+        private void TestAndAddJumpLocation(LegacyPegLocation origLoc, int row, int column)
         {
             if (TestBoardLocation(row, column))
             {
@@ -111,12 +111,12 @@ namespace LegacyTrianglePegGame
             return (row >= 0 && column >= 0 && row < 5 && column < 5 && boardArray[row, column].isValid);
         }
 
-        private void AddJumpToLocation(PegLocation loc, int row, int column)
+        private void AddJumpToLocation(LegacyPegLocation loc, int row, int column)
         {
             _AddJumpToLocation(loc, row, column);
         }
 
-        private void _AddJumpToLocation(PegLocation loc, int toRow, int toCol)
+        private void _AddJumpToLocation(LegacyPegLocation loc, int toRow, int toCol)
         {
             if (loc.location.row == 2 && loc.location.col == 2 && toRow == 4 && toCol == 0)
             {
@@ -132,11 +132,11 @@ namespace LegacyTrianglePegGame
                 return;
             }
 
-            PegMove move = new PegMove();
+            LegacyPegMove move = new LegacyPegMove();
             move.fromLocation = loc;
             move.toLocation = boardArray[toRow, toCol];
 
-            PegHole temp = move.CalcMiddle();
+            LegacyPegHole temp = move.CalcMiddle();
             move.middleLocation = boardArray[temp.row, temp.col];
             loc.places_can_jump_to.Add(move);
         }
@@ -145,9 +145,9 @@ namespace LegacyTrianglePegGame
 
         #region Moves
 
-        public void GetPossibleMoves(PegLocation loc, List<PegMove> moves)
+        public void GetPossibleMoves(LegacyPegLocation loc, List<LegacyPegMove> moves)
         {
-            foreach (PegMove move in loc.places_can_jump_to)
+            foreach (LegacyPegMove move in loc.places_can_jump_to)
             {
                 if (move.middleLocation.isValid && move.middleLocation.filled && !move.toLocation.filled)
                 {
@@ -156,7 +156,7 @@ namespace LegacyTrianglePegGame
             }
         }
 
-        public void MakeAMove(PegMove move)
+        public void MakeAMove(LegacyPegMove move)
         {
             move.fromLocation.filled = false;
             move.middleLocation.filled = false;
@@ -164,7 +164,7 @@ namespace LegacyTrianglePegGame
             pegsLeft--;
         }
 
-        public void UndoAMove(PegMove move)
+        public void UndoAMove(LegacyPegMove move)
         {
             move.fromLocation.filled = true;
             move.middleLocation.filled = true;

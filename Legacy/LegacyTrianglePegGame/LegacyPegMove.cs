@@ -1,14 +1,14 @@
 ﻿namespace LegacyTrianglePegGame
 {
-    public class PegMove
+    public class LegacyPegMove
     {
-        public PegLocation fromLocation;
-        public PegLocation middleLocation;
-        public PegLocation toLocation;
+        public LegacyPegLocation fromLocation;
+        public LegacyPegLocation middleLocation;
+        public LegacyPegLocation toLocation;
 
-        public PegHole CalcMiddle()
+        public LegacyPegHole CalcMiddle()
         {
-            PegHole temp = new PegHole();
+            LegacyPegHole temp = new LegacyPegHole();
             temp.row = fromLocation.location.row + ((toLocation.location.row - fromLocation.location.row) / 2);
             temp.col = fromLocation.location.col + ((toLocation.location.col - fromLocation.location.col) / 2);
             return temp;

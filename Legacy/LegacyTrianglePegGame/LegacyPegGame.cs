@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace LegacyTrianglePegGame
 {
-    public class PegGame
+    public class LegacyPegGame
     {
-        public PegBoard board;
+        public LegacyPegBoard board;
 
         public void InitGame()
         {
-            board = new PegBoard();
+            board = new LegacyPegBoard();
             board.InitBoard();
         }
 
@@ -19,14 +19,14 @@ namespace LegacyTrianglePegGame
             board.EmptyPeg(row, col);
         }
 
-        public List<PegMove> GetMovesOnBoard()
+        public List<LegacyPegMove> GetMovesOnBoard()
         {
-            List<PegMove> moves = new List<PegMove>();
+            List<LegacyPegMove> moves = new List<LegacyPegMove>();
             for (int i = 0; i < 5; i++)
             {
                 for (int j = 0; j < 5; j++)
                 {
-                    PegLocation loc = board.boardArray[i, j];
+                    LegacyPegLocation loc = board.boardArray[i, j];
                     if (loc.isValid && loc.filled)
                     {
                         board.GetPossibleMoves(loc, moves);
@@ -38,7 +38,7 @@ namespace LegacyTrianglePegGame
 
         public void EvalBoard(List<HistoricalMove> pastMoves)
         {
-            foreach (PegMove move in GetMovesOnBoard())
+            foreach (LegacyPegMove move in GetMovesOnBoard())
             {
                 if (EvalBoard_rec(move, pastMoves))
                 {
@@ -47,7 +47,7 @@ namespace LegacyTrianglePegGame
             }
         }
 
-        private bool EvalBoard_rec(PegMove move, List<HistoricalMove> pastMoves)
+        private bool EvalBoard_rec(LegacyPegMove move, List<HistoricalMove> pastMoves)
         {
             board.MakeAMove(move);
             HistoricalMove hist = null;
@@ -64,7 +64,7 @@ namespace LegacyTrianglePegGame
                 return true;
             }
 
-            foreach (PegMove newMove in GetMovesOnBoard())
+            foreach (LegacyPegMove newMove in GetMovesOnBoard())
             {
                 if (EvalBoard_rec(newMove, pastMoves))
                 {
@@ -79,13 +79,13 @@ namespace LegacyTrianglePegGame
 
     public class HistoricalMove
     {
-        public HistoricalMove(int count, PegMove m)
+        public HistoricalMove(int count, LegacyPegMove m)
         {
             order = count;
             move = m;
         }
 
         public int order;
-        public PegMove move;
+        public LegacyPegMove move;
     }
 }

@@ -2,17 +2,17 @@
 
 namespace LegacyTrianglePegGame
 {
-    public class PegLocation
+    public class LegacyPegLocation
     {
-        public PegLocation()
+        public LegacyPegLocation()
         {
-            places_can_jump_to = new List<PegMove>();
+            places_can_jump_to = new List<LegacyPegMove>();
         }
 
         public bool filled;
         public bool isValid;
-        public PegHole location;
-        public List<PegMove> places_can_jump_to;
+        public LegacyPegHole location;
+        public List<LegacyPegMove> places_can_jump_to;
 
         public string ToStringShort()
         {

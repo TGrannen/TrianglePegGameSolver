@@ -1,13 +1,13 @@
 ﻿namespace LegacyTrianglePegGame
 {
-  public class PegHole
+  public class LegacyPegHole
   {
-    public PegHole()
+    public LegacyPegHole()
     {
       row = -1;
       col = -1;
     }
-    public PegHole(int r, int c)
+    public LegacyPegHole(int r, int c)
     {
       row = r;
       col = c;
