@@ -7,11 +7,11 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
     {
         public bool SuccessfullySolved { get; set; }
         public List<PegMoveWithBoard> Moves { get; set; }
+    }
 
-        public class PegMoveWithBoard
-        {
-            public PegMove Move { get; set; }
-            public PegBoard Board { get; set; }
-        }
+    public class PegMoveWithBoard
+    {
+        public PegMove Move { get; set; }
+        public PegBoard Board { get; set; }
     }
 }

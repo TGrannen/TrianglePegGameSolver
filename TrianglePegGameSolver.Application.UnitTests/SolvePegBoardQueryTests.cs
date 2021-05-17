@@ -33,5 +33,23 @@ namespace TrianglePegGameSolver.Application.UnitTests
             result.Should().NotBeNull();
             result.SuccessfullySolved.Should().BeTrue();
         }
+
+        [Test]
+        public async Task ShouldReturnTheCorrectNumberOfMoves_WhenTheBoardIsFilled()
+        {
+            var pegBoard = new PegBoard();
+            pegBoard.InitBoard();
+
+            pegBoard.BoardArray[0, 0].Filled = false;
+
+            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
+            {
+                PegBoard = pegBoard,
+            });
+
+            result.Should().NotBeNull();
+            result.Moves.Should().NotBeNullOrEmpty();
+            result.Moves.Should().HaveCount(13);
+        }
     }
 }
