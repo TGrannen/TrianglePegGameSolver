@@ -1,8 +1,16 @@
 ﻿@page "/"
+@page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
 
-<h1>Hello, world!</h1>
+<h1 class="text-3xl font-bold text-gray-900">
+    Solve
+</h1>
 
-Welcome to your new app.
-
-<PegBoard></PegBoard>
+<div class="flex flex-col lg:flex-row">
+    <div class="w-1/2 self-center lg:w-3/4">
+        <PegBoard></PegBoard>
+    </div>
+    <div class="lg:w-1/4">
+        <MoveList></MoveList>
+    </div>
+</div>
