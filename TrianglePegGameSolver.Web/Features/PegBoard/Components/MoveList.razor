@@ -1,4 +1,5 @@
-﻿<div>
+﻿@using TrianglePegGameSolver.Domain
+<div>
     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">
         Moves
     </h3>
@@ -7,17 +8,17 @@
             <div class="w-0 flex-1 flex items-center">
                 <span>1.</span>
                 <span class="ml-2 flex-1 w-0 truncate">
-                    Remove 7
+                    Remove 1
                 </span>
             </div>
         </li>
-        @foreach (int i in Enumerable.Range(2, 9))
+        @foreach (var move in Moves.Select((x, i) => new { Move = x, Index = i + 2 }))
         {
-            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm @BgClass(i)">
+            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm @BgClass(move.Index)">
                 <div class="w-0 flex-1 flex items-center">
-                    <span>@(i).</span>
+                    <span>@(move.Index).</span>
                     <span class="ml-2 flex-1 w-0 truncate">
-                        Move 2 to 7
+                        Move @move.Move.From.Number to @move.Move.To.Number (@move.Move.From.Row-@move.Move.From.Column to @move.Move.To.Row-@move.Move.To.Column)
                     </span>
                 </div>
             </li>
@@ -27,6 +28,9 @@
 
 @code
 {
+    [Parameter]
+    public List<PegMove> Moves { get; set; } = new List<PegMove>();
+
     private string BgClass(int i)
     {
         return i % 2 == 0 ? "" : "bg-gray-100";
