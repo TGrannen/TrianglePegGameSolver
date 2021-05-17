@@ -68,10 +68,10 @@ stages:
       runOnce:
         deploy:
           steps:
-            - task: AzureFileCopy@4
+            - task: AzureFileCopy@2
               displayName: 'AzureBlob File Copy'
               inputs:
-                SourcePath: $(Pipeline.Workspace)/$(buildArtifact)/*
+                SourcePath: $(Pipeline.Workspace)/$(buildArtifact)
                 azureSubscription: '$(azureSubscription)'
                 Destination: AzureBlob
                 storage: $(azureStorageAccount)
