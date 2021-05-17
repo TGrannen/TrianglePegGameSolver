@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Legacy\LegacyTrianglePegGame\LegacyTrianglePegGame.csproj" />
     <ProjectReference Include="..\TrianglePegGameSolver.Domain\TrianglePegGameSolver.Domain.csproj" />
   </ItemGroup>
 

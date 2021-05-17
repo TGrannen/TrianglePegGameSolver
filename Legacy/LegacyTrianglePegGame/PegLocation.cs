@@ -14,11 +14,6 @@ namespace LegacyTrianglePegGame
         public PegHole location;
         public List<PegMove> places_can_jump_to;
 
-        public void PrintLocation()
-        {
-            Logger.WriteToScreen(ToStringShort(), false);
-        }
-
         public string ToStringShort()
         {
             string message = "";
