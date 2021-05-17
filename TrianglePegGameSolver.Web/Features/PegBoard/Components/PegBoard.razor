@@ -1,30 +1,31 @@
-﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 100 100">
+﻿@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using TrianglePegGameSolver.Web.Features.PegBoard.Models
 
-    <g id="svg_19">
-        <polygon stroke="#8f8f8f" id="svg_1" fill="#39bda7" points="0,30.78401017595388 18.260517140375327,0 38.51506733494716,31.006743457466655 " />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 7.81184 64.8874)" ry="7.75002" rx="7.25001" id="svg_2" cy="114.23217" cx="236.81382" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 6.00403 54.5661)" ry="7.75002" rx="7.25001" id="svg_3" cy="124.41305" cx="190.89617" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 6.29294 42.5694)" ry="7.75002" rx="7.25001" id="svg_4" cy="123.35409" cx="145.84661" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 19.1898 59.0419)" ry="7.75002" rx="7.25001" id="svg_5" cy="72.13229" cx="214.48614" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 17.4232 47.876)" ry="7.75002" rx="7.25001" id="svg_6" cy="78.31435" cx="164.63224" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 28.2097 42.1741)" ry="7.75002" rx="7.25001" id="svg_7" cy="40.03936" cx="140.94508" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 28.3337 53.1046)" ry="7.75002" rx="7.25001" id="svg_8" cy="39.27437" cx="186.67221" fill="@pegEmptyColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 40.2511 47.6788)" ry="7.75002" rx="7.25001" id="svg_9" cy="-1.87461" cx="167.10512" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 38.363 36.4617)" ry="7.75002" rx="7.25001" id="svg_10" cy="5.13904" cx="118.43487" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 3.19609 20.954)" ry="7.75002" rx="7.25001" id="svg_11" cy="136.94301" cx="52.77585" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 50.2772 41.8814)" ry="7.75002" rx="7.25001" id="svg_12" cy="-38.17747" cx="140.27673" fill="@pegRemovedColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 7.11633 30.5354)" ry="7.75002" rx="7.25001" id="svg_13" cy="117.00825" cx="100.45527" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 16.5511 36.6081)" ry="7.75002" rx="7.25001" id="svg_14" cy="83.96925" cx="119.9341" fill="@pegSelectedColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 17.374 24.4852)" ry="7.75002" rx="7.25001" id="svg_15" cy="74.07774" cx="74.81518" fill="@pegColor" />
-        <ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 27.8917 31.309)" ry="7.75002" rx="7.25001" id="svg_16" cy="43.2281" cx="97.63429" fill="@pegColor" />
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 100 100">
+    <polygon stroke="#8f8f8f" points="2.4281105697155,30.363564863801003 17.919604510068893,0.5228753238916397 35.13237878680229,30.363564863801003 " fill="#39bda7" id="svg_1" />
+    <g>
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="120" Y="30"></Peg>
+
+        <Peg PegStyle="PegStyle.Selected" X="100" Y="69"></Peg>
+        <Peg PegStyle="PegStyle.Selected" X="140" Y="69"></Peg>
+
+        <Peg PegStyle="PegStyle.Empty" X="80" Y="109"></Peg>
+        <Peg PegStyle="PegStyle.Empty" X="120" Y="109"></Peg>
+        <Peg PegStyle="PegStyle.Empty" X="160" Y="109"></Peg>
+
+        <Peg PegStyle="PegStyle.Filled" X="60" Y="148"></Peg>
+        <Peg PegStyle="PegStyle.Filled" X="100" Y="148"></Peg>
+        <Peg PegStyle="PegStyle.Filled" X="140" Y="148"></Peg>
+        <Peg PegStyle="PegStyle.Filled" X="180" Y="148"></Peg>
+
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="40" Y="188"></Peg>
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="80" Y="188"></Peg>
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="120" Y="188"></Peg>
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="160" Y="188"></Peg>
+        <Peg PegStyle="PegStyle.ToBeRemoved" X="200" Y="188"></Peg>
     </g>
 </svg>
 
 @code{
-
-    string pegColor = "#FFE7A2";
-    string pegEmptyColor = "#111111";
-    string pegRemovedColor = "#d01f1f";
-    string pegSelectedColor = "#5255dc";
 
 }
