@@ -1,0 +1,26 @@
+﻿@using TrianglePegGameSolver.Web.Features.PegBoard.Models
+<ellipse stroke="#8f8f8f" transform="matrix(-0.0815601 -0.123885 0.141226 -0.0715453 7.81184 64.8874)" ry="7.75002" rx="7.25001" id="svg_2" cy="114.23217" cx="236.81382" fill="@GetColor()" />
+
+@code{
+
+    [Parameter]
+    public PegStyle PegStyle { get; set; } = PegStyle.Filled;
+
+    private string GetColor()
+    {
+        return PegStyle switch
+        {
+            PegStyle.Filled => pegColor,
+            PegStyle.Empty => pegEmptyColor,
+            PegStyle.ToBeRemoved => pegRemovedColor,
+            PegStyle.Selected => pegSelectedColor,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+    }
+
+    string pegColor = "#FFE7A2";
+    string pegEmptyColor = "#111111";
+    string pegRemovedColor = "#d01f1f";
+    string pegSelectedColor = "#5255dc";
+
+}
