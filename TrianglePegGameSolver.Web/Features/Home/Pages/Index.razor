@@ -1,16 +1,36 @@
 ﻿@page "/"
 @page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using MediatR
+@using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
+@using TrianglePegGameSolver.Domain
+@using PegBoard = TrianglePegGameSolver.Domain.PegBoard
+
+@inject IMediator mediator
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve
 </h1>
 
+<button @onclick="OnClick">Solve</button>
+
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <PegBoard></PegBoard>
+        <PegBoard Board="board"></PegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList></MoveList>
+        <MoveList Moves="moves"></MoveList>
     </div>
 </div>
+
+@code
+{
+    PegBoard board = new PegBoard();
+    List<PegMove> moves = new List<PegMove>();
+
+    private async Task OnClick()
+    {
+        var result = await mediator.Send(new SolvePegBoardQuery { PegBoard = board });
+        moves = result.Moves.Select(x => x.Move).ToList();
+    }
+}
