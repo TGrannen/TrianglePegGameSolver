@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: windows-latest
 
 variables:
 - name: webProjectName
@@ -60,8 +60,6 @@ stages:
  - stage: Deploy
    jobs:
    - deployment: prod
-     pool:
-       vmImage: vs2017-win2016
      displayName: 'Deploy to Production'
      environment: production
      strategy:
