@@ -6,31 +6,39 @@
 @using TrianglePegGameSolver.Domain
 @using PegBoard = TrianglePegGameSolver.Domain.PegBoard
 
-@inject IMediator mediator
+@inject IMediator _mediator
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve
 </h1>
-
-<button @onclick="OnClick">Solve</button>
+<h3 class="text-xl text-gray-900">
+    Click any peg to show the solution
+</h3>
 
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <PegBoard Board="board"></PegBoard>
+        <PegBoard Board="_board" OnClick="PegClicked"></PegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="moves"></MoveList>
+        <MoveList Moves="_moves"></MoveList>
     </div>
 </div>
 
 @code
 {
-    PegBoard board = new PegBoard();
-    List<PegMove> moves = new List<PegMove>();
+    PegBoard _board = new PegBoard();
+    List<PegMove> _moves = new List<PegMove>();
 
-    private async Task OnClick()
+    private async Task PegClicked(PegHole hole)
     {
-        var result = await mediator.Send(new SolvePegBoardQuery { PegBoard = board });
-        moves = result.Moves.Select(x => x.Move).ToList();
+        hole.Filled = false;
+        await SolveBoard();
     }
+
+    private async Task SolveBoard()
+    {
+        var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = _board });
+        _moves = result.Moves.Select(x => x.Move).ToList();
+    }
+
 }

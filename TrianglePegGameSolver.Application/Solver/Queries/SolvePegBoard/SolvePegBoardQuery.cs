@@ -19,6 +19,7 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
     public class SolvePegBoardQueryHandler : IRequestHandler<SolvePegBoardQuery, SolvePegBoardQueryResponse>
     {
         private readonly ILogger<SolvePegBoardQueryHandler> _logger;
+        private static readonly RowColConversion Conversion = new RowColConversion();
 
         public SolvePegBoardQueryHandler(ILogger<SolvePegBoardQueryHandler> logger)
         {
@@ -27,12 +28,17 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
 
         public Task<SolvePegBoardQueryResponse> Handle(SolvePegBoardQuery request, CancellationToken cancellationToken)
         {
-            LegacyPegGame game = new LegacyPegGame();
             List<HistoricalMove> moves = new List<HistoricalMove>();
+
             try
             {
+                LegacyPegGame game = new LegacyPegGame();
                 game.InitGame();
-                game.board.EmptyPeg(0, 0);
+                foreach (var hole in request.PegBoard.Holes.Where(x => !x.Filled))
+                {
+                    var (row, col) = Conversion.ConvertToGridLocation(hole.Number);
+                    game.board.EmptyPeg(row, col);
+                }
 
                 game.EvalBoard(moves);
             }
@@ -58,23 +64,58 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
             {
                 From = new PegHole
                 {
-                    Column = move.fromLocation.location.col,
-                    Row = move.fromLocation.location.row,
+                    Number = Conversion.ConvertToHoleNumber(move.fromLocation),
                     Filled = move.fromLocation.filled,
                 },
                 Middle = new PegHole
                 {
-                    Column = move.middleLocation.location.col,
-                    Row = move.middleLocation.location.row,
+                    Number = Conversion.ConvertToHoleNumber(move.middleLocation),
                     Filled = move.middleLocation.filled,
                 },
                 To = new PegHole
                 {
-                    Column = move.toLocation.location.col,
-                    Row = move.toLocation.location.row,
+                    Number = Conversion.ConvertToHoleNumber(move.toLocation),
                     Filled = move.toLocation.filled,
                 },
             };
+        }
+
+        private class RowColConversion
+        {
+            private readonly Dictionary<int, (int, int)> _numberToGridDictionary = new Dictionary<int, (int, int)>();
+
+            private readonly Dictionary<(int, int), int> _gridToNumberDictionary = new Dictionary<(int, int), int>();
+
+            public RowColConversion()
+            {
+                var board = new LegacyPegBoard();
+                board.InitBoard();
+                int count = 1;
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        LegacyPegLocation loc = board.boardArray[i, j];
+                        if (loc.isValid)
+                        {
+                            _numberToGridDictionary.Add(count, (i, j));
+                            _gridToNumberDictionary.Add((i, j), count);
+
+                            count++;
+                        }
+                    }
+                }
+            }
+
+            public int ConvertToHoleNumber(LegacyPegLocation location)
+            {
+                return _gridToNumberDictionary[(location.location.row, location.location.col)];
+            }
+
+            public (int, int) ConvertToGridLocation(int number)
+            {
+                return _numberToGridDictionary[number];
+            }
         }
     }
 }
