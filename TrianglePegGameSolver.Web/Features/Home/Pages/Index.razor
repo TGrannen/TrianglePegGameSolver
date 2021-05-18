@@ -6,31 +6,63 @@
 @using TrianglePegGameSolver.Domain
 @using PegBoard = TrianglePegGameSolver.Domain.PegBoard
 
-@inject IMediator mediator
+@inject IMediator _mediator
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve
 </h1>
+<h3 class="text-xl text-gray-900">
+    Click any peg to show the solution
+</h3>
 
-<button @onclick="OnClick">Solve</button>
+@if (_hasSolution)
+{
+    <Button OnClick="Reset" Text="Reset"></Button>
+}
 
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <PegBoard Board="board"></PegBoard>
+        <PegBoard Board="_board" Move="_move" OnClick="PegClicked"></PegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="moves"></MoveList>
+        <MoveList Moves="_moves" StartingHole="_startingHole"></MoveList>
     </div>
 </div>
 
 @code
 {
-    PegBoard board = new PegBoard();
-    List<PegMove> moves = new List<PegMove>();
+    PegBoard _board = new PegBoard();
+    List<PegMove> _moves = new List<PegMove>();
+    PegMove _move = null;
+    PegHole _startingHole = null;
 
-    private async Task OnClick()
+    bool _hasSolution = false;
+
+    private async Task PegClicked(PegHole hole)
     {
-        var result = await mediator.Send(new SolvePegBoardQuery { PegBoard = board });
-        moves = result.Moves.Select(x => x.Move).ToList();
+        if (!_hasSolution)
+        {
+            hole.Filled = false;
+            _startingHole = hole;
+            await SolveBoard();
+        }
     }
+
+    private void Reset()
+    {
+        _board = new PegBoard();
+        _moves = new List<PegMove>();
+        _move = null;
+        _startingHole = null;
+        _hasSolution = false;
+    }
+
+    private async Task SolveBoard()
+    {
+        var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = _board });
+        _moves = result.Moves.Select(x => x.Move).ToList();
+        _move = _moves.FirstOrDefault();
+        _hasSolution = true;
+    }
+
 }

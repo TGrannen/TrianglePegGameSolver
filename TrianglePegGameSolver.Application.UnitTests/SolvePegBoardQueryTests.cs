@@ -21,9 +21,7 @@ namespace TrianglePegGameSolver.Application.UnitTests
         public async Task ShouldIndicateSuccessfulSolve_WhenBoardIsFilled()
         {
             var pegBoard = new PegBoard();
-            pegBoard.InitBoard();
-
-            pegBoard.BoardArray[0, 0].Filled = false;
+            pegBoard.Holes[0].Filled = false;
 
             var result = await _appFixture.SendAsync(new SolvePegBoardQuery
             {
@@ -38,9 +36,7 @@ namespace TrianglePegGameSolver.Application.UnitTests
         public async Task ShouldReturnTheCorrectNumberOfMoves_WhenTheBoardIsFilled()
         {
             var pegBoard = new PegBoard();
-            pegBoard.InitBoard();
-
-            pegBoard.BoardArray[0, 0].Filled = false;
+            pegBoard.Holes[0].Filled = false;
 
             var result = await _appFixture.SendAsync(new SolvePegBoardQuery
             {
