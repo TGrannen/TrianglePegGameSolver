@@ -1,6 +1,6 @@
 ﻿@using TrianglePegGameSolver.Web.Features.PegBoard.Models
 
-<ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_2" cy="@Y" cx="@X" fill="@GetColor()" />
+<ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_2" cy="@Y" cx="@X" fill="@GetColor()" @onclick="Clicked" />
 
 @code{
 
@@ -12,6 +12,9 @@
 
     [Parameter]
     public PegStyle PegStyle { get; set; } = PegStyle.Filled;
+
+    [Parameter]
+    public EventCallback<EventArgs> OnClick { get; set; }
 
     private string GetColor()
     {
@@ -29,5 +32,10 @@
     string pegEmptyColor = "#111111";
     string pegRemovedColor = "#d01f1f";
     string pegSelectedColor = "#5255dc";
+
+    private async Task Clicked()
+    {
+        await OnClick.InvokeAsync();
+    }
 
 }

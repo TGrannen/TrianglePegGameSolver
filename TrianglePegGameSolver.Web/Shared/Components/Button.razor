@@ -1,0 +1,14 @@
+﻿<button class="px-5 rounded-md bg-blue-500 text-white" @onclick="Click">@Text</button>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public EventCallback<EventArgs> OnClick { get; set; }
+
+    private async Task Click()
+    {
+        await OnClick.InvokeAsync();
+    }
+}
