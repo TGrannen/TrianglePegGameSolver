@@ -27,11 +27,28 @@ stages:
           workingDir: '$(webProjectName)'
 
       - task: DotNetCoreCLI@2
-        displayName: 'Publishing App'
+        displayName: 'Restore App'
+        inputs:
+          command: 'restore'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Build App'
+        inputs:
+          command: 'build'
+          arguments: '--configuration $(buildConfiguration) --no-restore'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Unit Tests'
+        inputs:
+          command: 'test'
+          arguments: '--configuration $(buildConfiguration) --no-restore'
+
+      - task: DotNetCoreCLI@2
+        displayName: 'Publish App'
         inputs:
           command: 'publish'
           publishWebProjects: true
-          arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/temp'
+          arguments: '--configuration $(buildConfiguration) --no-restore --output $(Build.ArtifactStagingDirectory)/temp'
           zipAfterPublish: false
           modifyOutputPath: false
 
