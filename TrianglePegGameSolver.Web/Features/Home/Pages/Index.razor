@@ -1,13 +1,15 @@
-﻿@page "/"
+﻿@inherits FluxorComponent
+@page "/"
 @page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.Home.Components
-@using MediatR
 @using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
 @using TrianglePegGameSolver.Domain
-@using PegBoard = TrianglePegGameSolver.Domain.PegBoard
+@using TrianglePegGameSolver.Web.Features.Home.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
 
-@inject IMediator _mediator
+@inject IDispatcher _dispatcher
+@inject IState<SolveState> _state
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve
@@ -16,54 +18,26 @@
     Click any peg to show the solution
 </h3>
 
-@if (_hasSolution)
+@if (_state.Value.HasSolution)
 {
     <Button OnClick="Reset" Text="Reset"></Button>
 }
 
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <SolvedPegBoard Board="_board" Move="_move" OnClick="PegClicked"></SolvedPegBoard>
+        <SolvedPegBoard></SolvedPegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="_moves" StartingHole="_startingHole"></MoveList>
+        <MoveList></MoveList>
     </div>
 </div>
 
 @code
 {
-    PegBoard _board = new PegBoard();
-    List<PegMove> _moves = new List<PegMove>();
-    PegMove _move = null;
-    PegHole _startingHole = null;
-
-    bool _hasSolution = false;
-
-    private async Task PegClicked(PegHole hole)
-    {
-        if (!_hasSolution)
-        {
-            hole.Filled = false;
-            _startingHole = hole;
-            await SolveBoard();
-        }
-    }
 
     private void Reset()
     {
-        _board = new PegBoard();
-        _moves = new List<PegMove>();
-        _move = null;
-        _startingHole = null;
-        _hasSolution = false;
-    }
-
-    private async Task SolveBoard()
-    {
-        var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = _board });
-        _moves = result.Moves.Select(x => x.Move).ToList();
-        _move = _moves.FirstOrDefault();
-        _hasSolution = true;
+        _dispatcher.Dispatch(new ResetAction());
     }
 
 }
