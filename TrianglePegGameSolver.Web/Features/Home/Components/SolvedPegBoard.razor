@@ -1,0 +1,50 @@
+﻿@inherits FluxorComponent
+@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using TrianglePegGameSolver.Web.Features.PegBoard.Models
+@using TrianglePegGameSolver.Domain
+@using TrianglePegGameSolver.Web.Features.Home.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
+
+@inject IDispatcher _dispatcher
+@inject IState<SolveState> _state
+
+<PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked"></PegBoard>
+
+@code{
+
+    private void PegClicked(PegHole hole)
+    {
+        if (!_state.Value.HasSolution)
+        {
+            hole.Filled = false;
+            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+        }
+    }
+
+    private List<PegHoleDetail> GetSolvedHoleDetailList()
+    {
+        return _state.Value.Board?.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
+    }
+
+    private PegStyle GetPegStyle(PegHole hole)
+    {
+        var number = hole.Number;
+        var move = _state.Value.CurrentMove?.Move;
+        if (hole.Filled)
+        {
+            if (move?.From.Number == number)
+            {
+                return PegStyle.Selected;
+            }
+
+            if (move?.Middle.Number == number)
+            {
+                return PegStyle.ToBeRemoved;
+            }
+
+            return PegStyle.Filled;
+        }
+        return PegStyle.Empty;
+    }
+
+}

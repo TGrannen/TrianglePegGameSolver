@@ -18,6 +18,22 @@ namespace TrianglePegGameSolver.Application.UnitTests
         }
 
         [Test]
+        public async Task ShouldHaveBoardsOnMoves_WhenTheBoardIsFilled()
+        {
+            var pegBoard = new PegBoard();
+            pegBoard.Holes[0].Filled = false;
+
+            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
+            {
+                PegBoard = pegBoard,
+            });
+
+            result.Should().NotBeNull();
+            result.Moves.Should().NotBeNullOrEmpty();
+            result.Moves.ForEach(x => x.Board.Should().NotBeNull());
+        }
+
+        [Test]
         public async Task ShouldIndicateSuccessfulSolve_WhenBoardIsFilled()
         {
             var pegBoard = new PegBoard();
