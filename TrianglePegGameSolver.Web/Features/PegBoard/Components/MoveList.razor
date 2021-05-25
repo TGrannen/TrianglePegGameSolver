@@ -1,13 +1,20 @@
-﻿@using TrianglePegGameSolver.Domain
+﻿@inherits FluxorComponent
+@using TrianglePegGameSolver.Domain
 @using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
+@using TrianglePegGameSolver.Web.Features.Home.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
+
+@inject IDispatcher _dispatcher
+@inject IState<SolveState> _state
+
 <div>
     <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">
         Moves
     </h3>
     <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
-        @if (Moves != null && Moves.Any())
+        @if (_state.Value.Moves != null && _state.Value.Moves.Any())
         {
-            @foreach (var move in Moves.Select((x, i) => new { x.Move, MoveWithBoard = x, Index = i + 2 }))
+            @foreach (var move in _state.Value.Moves.Select((x, i) => new { x.Move, MoveWithBoard = x, Index = i + 2 }))
             {
                 <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm cursor-pointer select-none @BgClass(move.Index) hover:bg-gray-200" @onclick="x => MoveClicked(move.MoveWithBoard)">
                     <div class="w-0 flex-1 flex items-center">
@@ -24,15 +31,10 @@
 
 @code
 {
-    [Parameter]
-    public List<PegMoveWithBoard> Moves { get; set; } = new List<PegMoveWithBoard>();
 
-    [Parameter]
-    public EventCallback<PegMoveWithBoard> MoveClick { get; set; }
-
-    private async Task MoveClicked(PegMoveWithBoard move)
+    private void MoveClicked(PegMoveWithBoard move)
     {
-        await MoveClick.InvokeAsync(move);
+        _dispatcher.Dispatch(new MoveSelectedAction { Move = move });
     }
 
     private string BgClass(int i)

@@ -1,40 +1,43 @@
-﻿@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+﻿@inherits FluxorComponent
+@using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.PegBoard.Models
 @using TrianglePegGameSolver.Domain
+@using TrianglePegGameSolver.Web.Features.Home.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
+
+@inject IDispatcher _dispatcher
+@inject IState<SolveState> _state
 
 <PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked"></PegBoard>
 
 @code{
-    [Parameter]
-    public Domain.PegBoard Board { get; set; }
 
-    [Parameter]
-    public PegMove Move { get; set; }
-
-    [Parameter]
-    public EventCallback<PegHole> OnClick { get; set; }
-
-    private async Task PegClicked(PegHole hole)
+    private void PegClicked(PegHole hole)
     {
-        await OnClick.InvokeAsync(hole);
+        if (!_state.Value.HasSolution)
+        {
+            hole.Filled = false;
+            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+        }
     }
 
     private List<PegHoleDetail> GetSolvedHoleDetailList()
     {
-        return Board?.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
+        return _state.Value.Board?.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
     }
 
     private PegStyle GetPegStyle(PegHole hole)
     {
         var number = hole.Number;
+        var move = _state.Value.CurrentMove?.Move;
         if (hole.Filled)
         {
-            if (Move?.From.Number == number)
+            if (move?.From.Number == number)
             {
                 return PegStyle.Selected;
             }
 
-            if (Move?.Middle.Number == number)
+            if (move?.Middle.Number == number)
             {
                 return PegStyle.ToBeRemoved;
             }

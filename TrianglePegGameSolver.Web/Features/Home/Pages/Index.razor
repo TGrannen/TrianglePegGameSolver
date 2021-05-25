@@ -1,4 +1,5 @@
-﻿@page "/"
+﻿@inherits FluxorComponent
+@page "/"
 @page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.Home.Components
@@ -24,33 +25,19 @@
 
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <SolvedPegBoard Board="_state.Value.Board" Move="_state.Value.CurrentMove?.Move" OnClick="PegClicked"></SolvedPegBoard>
+        <SolvedPegBoard></SolvedPegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="_state.Value.Moves" MoveClick="x=>SetFromMove(x)"></MoveList>
+        <MoveList></MoveList>
     </div>
 </div>
 
 @code
 {
 
-    private void PegClicked(PegHole hole)
-    {
-        if (!_state.Value.HasSolution)
-        {
-            hole.Filled = false;
-            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
-        }
-    }
-
     private void Reset()
     {
         _dispatcher.Dispatch(new ResetAction());
-    }
-
-    private void SetFromMove(PegMoveWithBoard move)
-    {
-        _dispatcher.Dispatch(new MoveSelectedAction { Move = move });
     }
 
 }
