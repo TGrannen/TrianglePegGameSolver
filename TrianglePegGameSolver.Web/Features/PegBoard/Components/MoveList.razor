@@ -8,9 +8,23 @@
 @inject IState<SolveState> _state
 
 <div>
-    <h3 class="text-lg leading-6 font-medium text-gray-900 mb-2">
-        Moves
-    </h3>
+    <div class="flex justify-between mb-2">
+        <h3 class="text-lg leading-6 font-medium text-gray-900 ">
+            Moves
+        </h3>
+        @if (_state.Value.Moves != null && _state.Value.Moves.Any())
+        {
+            <div class="mr-2">
+                <button class="bg-gray-100 hover:bg-gray-200 py-1 px-2 rounded">
+                    <ArrowLeftIcon class="h-6 w-6" @onclick="x => Previous()"></ArrowLeftIcon>
+                </button>
+
+                <button class="bg-gray-100 hover:bg-gray-200 py-1 px-2 ml-2 rounded">
+                    <ArrowRightIcon class="h-6 w-6" @onclick="x => Next()"></ArrowRightIcon>
+                </button>
+            </div>
+        }
+    </div>
     <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
         @if (_state.Value.Moves != null && _state.Value.Moves.Any())
         {
@@ -40,5 +54,15 @@
     private string BgClass(int i)
     {
         return i % 2 == 0 ? "" : "bg-gray-100";
+    }
+
+    private void Previous()
+    {
+        _dispatcher.Dispatch(new PreviousMoveAction());
+    }
+
+    private void Next()
+    {
+        _dispatcher.Dispatch(new NextMoveAction());
     }
 }
