@@ -26,7 +26,7 @@
         <SolvedPegBoard Board="_board" Move="_move" OnClick="PegClicked"></SolvedPegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="_moves" StartingHole="_startingHole" MoveClick="x=>SetFromMove(x)"></MoveList>
+        <MoveList Moves="_moves" MoveClick="x=>SetFromMove(x)"></MoveList>
     </div>
 </div>
 
@@ -35,7 +35,6 @@
     PegBoard _board = new PegBoard();
     List<PegMoveWithBoard> _moves = new List<PegMoveWithBoard>();
     PegMove _move = null;
-    PegHole _startingHole = null;
 
     bool _hasSolution = false;
 
@@ -44,7 +43,6 @@
         if (!_hasSolution)
         {
             hole.Filled = false;
-            _startingHole = hole;
             await SolveBoard();
         }
     }
@@ -54,7 +52,6 @@
         _board = new PegBoard();
         _moves = new List<PegMoveWithBoard>();
         _move = null;
-        _startingHole = null;
         _hasSolution = false;
     }
 

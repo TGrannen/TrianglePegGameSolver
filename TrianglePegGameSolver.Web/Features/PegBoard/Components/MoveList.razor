@@ -5,20 +5,9 @@
         Moves
     </h3>
     <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
-        @if (StartingHole != null)
-        {
-            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm @BgClass(1)">
-                <div class="w-0 flex-1 flex items-center">
-                    <span>1.</span>
-                    <span class="ml-2 flex-1 w-0 truncate">
-                        Remove @(StartingHole.Number)
-                    </span>
-                </div>
-            </li>
-        }
         @foreach (var move in Moves.Select((x, i) => new { x.Move, MoveWithBoard = x, Index = i + 2 }))
         {
-            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm cursor-pointer @BgClass(move.Index) hover:bg-gray-200" @onclick="x=> MoveClicked(move.MoveWithBoard)">
+            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm cursor-pointer select-none @BgClass(move.Index) hover:bg-gray-200" @onclick="x=> MoveClicked(move.MoveWithBoard)">
                 <div class="w-0 flex-1 flex items-center">
                     <span>@(move.Index).</span>
                     <span class="ml-2 flex-1 w-0 truncate">
@@ -34,9 +23,6 @@
 {
     [Parameter]
     public List<PegMoveWithBoard> Moves { get; set; } = new List<PegMoveWithBoard>();
-
-    [Parameter]
-    public PegHole StartingHole { get; set; } = null;
 
     [Parameter]
     public EventCallback<PegMoveWithBoard> MoveClick { get; set; }
