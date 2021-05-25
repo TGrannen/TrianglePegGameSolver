@@ -1,6 +1,7 @@
 ﻿@page "/"
 @page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using TrianglePegGameSolver.Web.Features.Home.Components
 @using MediatR
 @using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
 @using TrianglePegGameSolver.Domain
@@ -22,7 +23,7 @@
 
 <div class="flex flex-col lg:flex-row">
     <div class="w-1/2 self-center lg:w-3/4">
-        <PegBoard Board="_board" Move="_move" OnClick="PegClicked"></PegBoard>
+        <SolvedPegBoard Board="_board" Move="_move" OnClick="PegClicked"></SolvedPegBoard>
     </div>
     <div class="lg:w-1/4">
         <MoveList Moves="_moves" StartingHole="_startingHole"></MoveList>

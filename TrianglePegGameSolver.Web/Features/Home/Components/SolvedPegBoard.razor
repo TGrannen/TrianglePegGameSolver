@@ -1,0 +1,47 @@
+﻿@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using TrianglePegGameSolver.Web.Features.PegBoard.Models
+@using TrianglePegGameSolver.Domain
+
+<PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked"></PegBoard>
+
+@code{
+    [Parameter]
+    public Domain.PegBoard Board { get; set; }
+
+    [Parameter]
+    public PegMove Move { get; set; }
+
+    [Parameter]
+    public EventCallback<PegHole> OnClick { get; set; }
+
+    private async Task PegClicked(PegHole hole)
+    {
+        await OnClick.InvokeAsync(hole);
+    }
+
+    private List<PegHoleDetail> GetSolvedHoleDetailList()
+    {
+        return Board.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
+    }
+
+    private PegStyle GetPegStyle(PegHole hole)
+    {
+        var number = hole.Number;
+        if (hole.Filled)
+        {
+            if (Move?.From.Number == number)
+            {
+                return PegStyle.Selected;
+            }
+
+            if (Move?.Middle.Number == number)
+            {
+                return PegStyle.ToBeRemoved;
+            }
+
+            return PegStyle.Filled;
+        }
+        return PegStyle.Empty;
+    }
+
+}
