@@ -26,14 +26,14 @@
         <SolvedPegBoard Board="_board" Move="_move" OnClick="PegClicked"></SolvedPegBoard>
     </div>
     <div class="lg:w-1/4">
-        <MoveList Moves="_moves" StartingHole="_startingHole"></MoveList>
+        <MoveList Moves="_moves" StartingHole="_startingHole" MoveClick="x=>SetFromMove(x)"></MoveList>
     </div>
 </div>
 
 @code
 {
     PegBoard _board = new PegBoard();
-    List<PegMove> _moves = new List<PegMove>();
+    List<PegMoveWithBoard> _moves = new List<PegMoveWithBoard>();
     PegMove _move = null;
     PegHole _startingHole = null;
 
@@ -52,7 +52,7 @@
     private void Reset()
     {
         _board = new PegBoard();
-        _moves = new List<PegMove>();
+        _moves = new List<PegMoveWithBoard>();
         _move = null;
         _startingHole = null;
         _hasSolution = false;
@@ -61,9 +61,15 @@
     private async Task SolveBoard()
     {
         var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = _board });
-        _moves = result.Moves.Select(x => x.Move).ToList();
-        _move = _moves.FirstOrDefault();
+        _moves = result.Moves;
+        _move = _moves.FirstOrDefault()?.Move;
         _hasSolution = true;
+    }
+
+    private void SetFromMove(PegMoveWithBoard move)
+    {
+        _board = move.Board;
+        _move = move.Move;
     }
 
 }
