@@ -21,7 +21,7 @@
 
     private List<PegHoleDetail> GetSolvedHoleDetailList()
     {
-        return Board.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
+        return Board?.Holes.Select(x => new PegHoleDetail { Hole = x, Style = GetPegStyle(x) }).ToList();
     }
 
     private PegStyle GetPegStyle(PegHole hole)
