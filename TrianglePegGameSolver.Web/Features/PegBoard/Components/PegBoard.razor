@@ -5,30 +5,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 50 50">
     <polygon stroke="#8f8f8f" points="2.4281105697155,30.363564863801003 17.919604510068893,0.5228753238916397 35.13237878680229,30.363564863801003 " fill="#39bda7" id="svg_1" />
     <g>
-        <Peg PegStyle="GetPegStyle(Board.Holes[0])" X="120" Y="30" OnClick="x =>  PegClicked(Board.Holes[0])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[1])" X="100" Y="69" OnClick="x =>  PegClicked(Board.Holes[1])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[2])" X="140" Y="69" OnClick="x =>  PegClicked(Board.Holes[2])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[3])" X="80" Y="109" OnClick="x =>  PegClicked(Board.Holes[3])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[4])" X="120" Y="109" OnClick="x => PegClicked(Board.Holes[4])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[5])" X="160" Y="109" OnClick="x => PegClicked(Board.Holes[5])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[6])" X="60" Y="148" OnClick="x =>  PegClicked(Board.Holes[6])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[7])" X="100" Y="148" OnClick="x => PegClicked(Board.Holes[7])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[8])" X="140" Y="148" OnClick="x => PegClicked(Board.Holes[8])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[9])" X="180" Y="148" OnClick="x => PegClicked(Board.Holes[9])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[10])" X="40" Y="188" OnClick="x =>  PegClicked(Board.Holes[10])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[11])" X="80" Y="188" OnClick="x =>  PegClicked(Board.Holes[11])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[12])" X="120" Y="188" OnClick="x => PegClicked(Board.Holes[12])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[13])" X="160" Y="188" OnClick="x => PegClicked(Board.Holes[13])"></Peg>
-        <Peg PegStyle="GetPegStyle(Board.Holes[14])" X="200" Y="188" OnClick="x => PegClicked(Board.Holes[14])"></Peg>
+        <Peg PegStyle="Holes[0].Style" X="120" Y="30" OnClick="x =>  PegClicked(Holes[0].Hole)"></Peg>
+        <Peg PegStyle="Holes[1].Style" X="100" Y="69" OnClick="x =>  PegClicked(Holes[1].Hole)"></Peg>
+        <Peg PegStyle="Holes[2].Style" X="140" Y="69" OnClick="x =>  PegClicked(Holes[2].Hole)"></Peg>
+        <Peg PegStyle="Holes[3].Style" X="80" Y="109" OnClick="x =>  PegClicked(Holes[3].Hole)"></Peg>
+        <Peg PegStyle="Holes[4].Style" X="120" Y="109" OnClick="x => PegClicked(Holes[4].Hole)"></Peg>
+        <Peg PegStyle="Holes[5].Style" X="160" Y="109" OnClick="x => PegClicked(Holes[5].Hole)"></Peg>
+        <Peg PegStyle="Holes[6].Style" X="60" Y="148" OnClick="x =>  PegClicked(Holes[6].Hole)"></Peg>
+        <Peg PegStyle="Holes[7].Style" X="100" Y="148" OnClick="x => PegClicked(Holes[7].Hole)"></Peg>
+        <Peg PegStyle="Holes[8].Style" X="140" Y="148" OnClick="x => PegClicked(Holes[8].Hole)"></Peg>
+        <Peg PegStyle="Holes[9].Style" X="180" Y="148" OnClick="x => PegClicked(Holes[9].Hole)"></Peg>
+        <Peg PegStyle="Holes[10].Style" X="40" Y="188" OnClick="x =>  PegClicked(Holes[10].Hole)"></Peg>
+        <Peg PegStyle="Holes[11].Style" X="80" Y="188" OnClick="x =>  PegClicked(Holes[11].Hole)"></Peg>
+        <Peg PegStyle="Holes[12].Style" X="120" Y="188" OnClick="x => PegClicked(Holes[12].Hole)"></Peg>
+        <Peg PegStyle="Holes[13].Style" X="160" Y="188" OnClick="x => PegClicked(Holes[13].Hole)"></Peg>
+        <Peg PegStyle="Holes[14].Style" X="200" Y="188" OnClick="x => PegClicked(Holes[14].Hole)"></Peg>
     </g>
 </svg>
 
 @code{
     [Parameter]
-    public Domain.PegBoard Board { get; set; }
-
-    [Parameter]
-    public PegMove Move { get; set; }
+    public List<PegHoleDetail> Holes { get; set; }
 
     [Parameter]
     public EventCallback<PegHole> OnClick { get; set; }
@@ -36,26 +33,6 @@
     private async Task PegClicked(PegHole hole)
     {
         await OnClick.InvokeAsync(hole);
-    }
-
-    private PegStyle GetPegStyle(PegHole hole)
-    {
-        var number = hole.Number;
-        if (hole.Filled)
-        {
-            if (Move?.From.Number == number)
-            {
-                return PegStyle.Selected;
-            }
-
-            if (Move?.Middle.Number == number)
-            {
-                return PegStyle.ToBeRemoved;
-            }
-
-            return PegStyle.Filled;
-        }
-        return PegStyle.Empty;
     }
 
 }
