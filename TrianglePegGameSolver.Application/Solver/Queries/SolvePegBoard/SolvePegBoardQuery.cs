@@ -1,7 +1,5 @@
 ﻿using LegacyTrianglePegGame;
 using MediatR;
-using Microsoft.Extensions.Logging;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -18,47 +16,32 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
 
     public class SolvePegBoardQueryHandler : IRequestHandler<SolvePegBoardQuery, SolvePegBoardQueryResponse>
     {
-        private readonly ILogger<SolvePegBoardQueryHandler> _logger;
         private static readonly RowColConversion Conversion = new RowColConversion();
-
-        public SolvePegBoardQueryHandler(ILogger<SolvePegBoardQueryHandler> logger)
-        {
-            _logger = logger;
-        }
 
         public Task<SolvePegBoardQueryResponse> Handle(SolvePegBoardQuery request, CancellationToken cancellationToken)
         {
             List<HistoricalMove> moves = new List<HistoricalMove>();
 
-            try
-            {
-                LegacyPegGame game = new LegacyPegGame();
-                game.InitGame();
-                foreach (var hole in request.PegBoard.Holes.Where(x => !x.Filled))
-                {
-                    var (row, col) = Conversion.ConvertToGridLocation(hole.Number);
-                    game.board.EmptyPeg(row, col);
-                }
+            LegacyPegGame game = new LegacyPegGame();
 
-                game.EvalBoard(moves);
-            }
-            catch (Exception e)
+            game.InitGame();
+
+            foreach (var hole in request.PegBoard.Holes.Where(x => !x.Filled))
             {
-                _logger.LogError(e, "Error solving board");
+                var (row, col) = Conversion.ConvertToGridLocation(hole.Number);
+                game.board.EmptyPeg(row, col);
             }
 
-            var result = new SolvePegBoardQueryResponse
+            game.EvalBoard(moves);
+
+            return Task.FromResult(new SolvePegBoardQueryResponse
             {
                 SuccessfullySolved = true,
-                Moves = moves.Select(x => new PegMoveWithBoard()
-                {
-                    Move = ConvertFromLegacy(x.move)
-                }).ToList()
-            };
-            return Task.FromResult(result);
+                Moves = GetPegMoveWithBoards(moves, request.PegBoard.Clone())
+            });
         }
 
-        private PegMove ConvertFromLegacy(LegacyPegMove move)
+        private static PegMove ConvertFromLegacy(LegacyPegMove move)
         {
             return new PegMove
             {
@@ -80,11 +63,44 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
             };
         }
 
+        private static List<PegMoveWithBoard> GetPegMoveWithBoards(List<HistoricalMove> moves, PegBoard tempBoard)
+        {
+            var resultList = new List<PegMoveWithBoard>();
+            foreach (HistoricalMove historicalMove in moves.OrderBy(x => x.order))
+            {
+                resultList.Add(new PegMoveWithBoard
+                {
+                    Move = ConvertFromLegacy(historicalMove.move),
+                    Board = tempBoard
+                });
+
+                tempBoard = tempBoard.Clone();
+                MakeMove(tempBoard, historicalMove);
+            }
+
+            return resultList;
+        }
+
+        private static void MakeMove(PegBoard board, HistoricalMove historicalMove)
+        {
+            var fromNumber = Conversion.ConvertToHoleNumber(historicalMove.move.fromLocation);
+            var toNumber = Conversion.ConvertToHoleNumber(historicalMove.move.toLocation);
+            var middleNumber = Conversion.ConvertToHoleNumber(historicalMove.move.middleLocation);
+            SetHoleFilled(board, fromNumber, false);
+            SetHoleFilled(board, toNumber, true);
+            SetHoleFilled(board, middleNumber, false);
+        }
+
+        private static void SetHoleFilled(PegBoard board, int fromNumber, bool filled)
+        {
+            var hole = board.Holes.FirstOrDefault(x => x.Number == fromNumber);
+            if (hole != null) hole.Filled = filled;
+        }
+
         private class RowColConversion
         {
-            private readonly Dictionary<int, (int, int)> _numberToGridDictionary = new Dictionary<int, (int, int)>();
-
             private readonly Dictionary<(int, int), int> _gridToNumberDictionary = new Dictionary<(int, int), int>();
+            private readonly Dictionary<int, (int, int)> _numberToGridDictionary = new Dictionary<int, (int, int)>();
 
             public RowColConversion()
             {
@@ -107,14 +123,14 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
                 }
             }
 
-            public int ConvertToHoleNumber(LegacyPegLocation location)
-            {
-                return _gridToNumberDictionary[(location.location.row, location.location.col)];
-            }
-
             public (int, int) ConvertToGridLocation(int number)
             {
                 return _numberToGridDictionary[number];
+            }
+
+            public int ConvertToHoleNumber(LegacyPegLocation location)
+            {
+                return _gridToNumberDictionary[(location.location.row, location.location.col)];
             }
         }
     }
