@@ -2,10 +2,10 @@
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.PegBoard.Models
 @using TrianglePegGameSolver.Domain
-@using TrianglePegGameSolver.Web.Features.Home.Store
+@using TrianglePegGameSolver.Web.Features.PlayGame.Store
 
 @inject IDispatcher _dispatcher
-@inject IState<SolveState> _state
+@inject IState<PlayGameState> _state
 
 <PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked"></PegBoard>
 
@@ -13,6 +13,14 @@
 
     private void PegClicked(PegHole hole)
     {
+        if (!_state.Value.StartingHoleSelected)
+        {
+            _dispatcher.Dispatch(new SelectStartingHoleAction { PegHole = hole });
+        }
+        else
+        {
+            _dispatcher.Dispatch(new SelectPegAction { PegHole = hole });
+        }
     }
 
     private List<PegHoleDetail> GetSolvedHoleDetailList()
@@ -23,10 +31,10 @@
     private PegStyle GetPegStyle(PegHole hole)
     {
         var number = hole.Number;
-        var move = _state.Value.CurrentMove;
+        var fromHole = _state.Value.From;
         if (hole.Filled)
         {
-            if (move?.Move.From.Number == number)
+            if (fromHole?.Number == number)
             {
                 return PegStyle.Selected;
             }
