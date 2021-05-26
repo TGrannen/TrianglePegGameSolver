@@ -15,10 +15,16 @@
     <h1 class="text-3xl font-bold text-gray-900">
         Play
     </h1>
+    @if (_state.Value.Moves.Any())
+    {
+        <div class="self-center">
+            <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
+        </div>
+    }
     @if (_state.Value.StartingHoleSelected)
     {
         <div class="self-center">
-            <Button OnClick="Restart" Text="Restart"></Button>
+            <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
         </div>
     }
 </div>
@@ -41,5 +47,10 @@
     private void Restart()
     {
         _dispatcher.Dispatch(new RestartAction());
+    }
+
+    private void UndoMove()
+    {
+        _dispatcher.Dispatch(new UndoMoveAction());
     }
 }
