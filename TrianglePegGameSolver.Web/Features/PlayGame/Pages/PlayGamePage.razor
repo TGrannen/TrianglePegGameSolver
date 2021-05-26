@@ -1,9 +1,6 @@
 ﻿@inherits FluxorComponent
 @page "/Play"
-@using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.PlayGame.Components
-@using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
-@using TrianglePegGameSolver.Domain
 @using TrianglePegGameSolver.Web.Features.PlayGame.Store
 
 @inject IDispatcher _dispatcher
@@ -15,10 +12,16 @@
     <h1 class="text-3xl font-bold text-gray-900">
         Play
     </h1>
+    @if (_state.Value.Moves.Any())
+    {
+        <div class="self-center">
+            <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
+        </div>
+    }
     @if (_state.Value.StartingHoleSelected)
     {
         <div class="self-center">
-            <Button OnClick="Restart" Text="Restart"></Button>
+            <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
         </div>
     }
 </div>
@@ -35,11 +38,31 @@
         <PlayablePegBoard></PlayablePegBoard>
     </div>
 </div>
+@if (_showRestartModal)
+{
+    <RestartModal OnClose="OnRestartModalClose"></RestartModal>
+}
 
 @code
 {
+    private bool _showRestartModal = false;
+
     private void Restart()
     {
-        _dispatcher.Dispatch(new RestartAction());
+        _showRestartModal = true;
+    }
+
+    private void UndoMove()
+    {
+        _dispatcher.Dispatch(new UndoMoveAction());
+    }
+
+    private void OnRestartModalClose(bool selection)
+    {
+        _showRestartModal = false;
+        if (selection)
+        {
+            _dispatcher.Dispatch(new RestartAction());
+        }
     }
 }

@@ -22,15 +22,24 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
         }
 
         [ReducerMethod(typeof(RestartAction))]
-        public static PlayGameState OnRestart(PlayGameState _)
+        public static PlayGameState OnRestart(PlayGameState state)
         {
-            return new PlayGameState
+            return state with
             {
                 Board = new Domain.PegBoard(),
                 Moves = new Stack<PegMoveWithBoard>(),
                 From = null,
                 To = null,
                 StartingHoleSelected = false
+            };
+        }
+
+        [ReducerMethod]
+        public static PlayGameState OnSetShowPegNumbersAction(PlayGameState state, SetShowPegNumbersAction action)
+        {
+            return state with
+            {
+                ShowPegNumbers = action.ShowNumbers
             };
         }
 
@@ -88,17 +97,16 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
         [ReducerMethod(typeof(UndoMoveAction))]
         public static PlayGameState UndoMoveAction(PlayGameState state)
         {
-            if (state.Moves.Count > 1)
+            if (state.Moves.Count > 0)
             {
-                state.Moves.Pop();
-
-                if (state.Moves.TryPeek(out PegMoveWithBoard result))
+                if (state.Moves.TryPop(out PegMoveWithBoard result))
                 {
                     return state with
                     {
                         From = null,
                         To = null,
-                        Board = result.Board
+                        Board = result.Board,
+                        Moves = state.Moves
                     };
                 }
             }

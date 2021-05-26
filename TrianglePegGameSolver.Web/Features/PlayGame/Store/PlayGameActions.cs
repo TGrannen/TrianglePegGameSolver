@@ -38,4 +38,9 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
     {
         public int MoveCount { get; set; }
     }
+
+    public class SetShowPegNumbersAction
+    {
+        public bool ShowNumbers { get; set; }
+    }
 }
