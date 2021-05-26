@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard;
 
-namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
+namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
 {
     public static class PlayGameStateReducers
     {
@@ -73,6 +73,15 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
             {
                 Board = state.Board,
                 StartingHoleSelected = true
+            };
+        }
+
+        [ReducerMethod]
+        public static PlayGameState SetAvailableMovesAction(PlayGameState state, SetAvailableMovesAction action)
+        {
+            return state with
+            {
+                AvailableMoves = action.MoveCount
             };
         }
 
