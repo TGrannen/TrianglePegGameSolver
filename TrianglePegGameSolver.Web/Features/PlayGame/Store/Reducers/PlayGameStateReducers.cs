@@ -45,6 +45,15 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
                 };
             }
 
+            if (state.From.Number == action.PegHole.Number)
+            {
+                return state with
+                {
+                    From = null,
+                    To = null
+                };
+            }
+
             return state with
             {
                 To = action.PegHole
