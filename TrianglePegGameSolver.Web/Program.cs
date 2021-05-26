@@ -1,6 +1,8 @@
 using Fluxor;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -20,6 +22,14 @@ namespace TrianglePegGameSolver.Web
             builder.Services.AddFluxor(o => o.ScanAssemblies(typeof(Program).Assembly).UseReduxDevTools());
 
             builder.Services.AddApplication();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration)
+                .CreateLogger();
+
+            builder.Logging.SetMinimumLevel(LogLevel.None);
+
+            builder.Logging.AddSerilog();
 
             await builder.Build().RunAsync();
         }

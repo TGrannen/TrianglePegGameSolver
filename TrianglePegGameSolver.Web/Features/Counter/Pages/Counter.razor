@@ -1,7 +1,9 @@
 ﻿@page "/counter"
 @using TrianglePegGameSolver.Web.Features.Counter.Store
+@using Microsoft.Extensions.Logging
 @inject IDispatcher Dispatcher
 @inject IState<CounterState> CounterState
+@inject ILogger<Counter> logger
 
 <h1>Counter</h1>
 
@@ -14,5 +16,6 @@
     private void IncrementCount()
     {
         Dispatcher.Dispatch(new CounterIncrementAction());
+        logger.LogInformation("Increment {@Count}", new { Test = "Demo", Value = CounterState.Value.CurrentCount });
     }
 }
