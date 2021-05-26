@@ -20,9 +20,11 @@
     Click any peg to show the solution
 </h3>
 
-@if (_state.Value.HasSolution)
+@if (_state.Value.SolutionAttempted)
 {
-    <Button OnClick="Reset" Text="Reset"></Button>
+    <div class="my-2">
+        <Button OnClick="Reset" Text="Reset"></Button>
+    </div>
 }
 <div class="flex flex-col lg:flex-row">
     @if (_state.Value.IsLoading)
@@ -33,12 +35,32 @@
     }
     else
     {
-        <div class="w-full self-center lg:w-3/4">
-            <SolvedPegBoard></SolvedPegBoard>
-        </div>
-        <div class="lg:w-1/4">
-            <MoveList></MoveList>
-        </div>
+        if (_state.Value.SolutionAttempted)
+        {
+            if (_state.Value.FoundSolution)
+            {
+                <div class="w-full self-center lg:w-3/4">
+                    <SolvedPegBoard></SolvedPegBoard>
+                </div>
+                <div class="lg:w-1/4">
+                    <MoveList></MoveList>
+                </div>
+            }
+            else
+            {
+                <div class="rounded-md bg-red-300 p-2 text-red-900 my-3 border-red-900 border-2">
+                    <div>Failed to find solution!</div>
+                </div>
+            }
+
+        }
+        else
+        {
+            <div class="w-3/4 self-center">
+                <SolvedPegBoard></SolvedPegBoard>
+            </div>
+        }
+
     }
 </div>
 

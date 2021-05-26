@@ -73,10 +73,21 @@ namespace TrianglePegGameSolver.Web.Features.Home.Store
             };
         }
 
+        [ReducerMethod(typeof(FailedToSolveResultAction))]
+        public static SolveState OnFailedToSolveResult(SolveState _)
+        {
+            var state = GetResetSolveState();
+            return state with
+            {
+                SolutionAttempted = true,
+                FoundSolution = false
+            };
+        }
+
         [ReducerMethod]
         public static SolveState OnSolvedResultAction(SolveState state, SolvedResultAction action)
         {
-            var moves = action.BoardQueryResponse.Moves;
+            var moves = action.Moves;
             if (moves != null && moves.Any())
             {
                 var move = moves.First();
@@ -87,7 +98,8 @@ namespace TrianglePegGameSolver.Web.Features.Home.Store
                     Board = move.Board,
                     IsLoading = false,
                     Moves = moves,
-                    HasSolution = true
+                    SolutionAttempted = true,
+                    FoundSolution = true
                 };
             }
 
@@ -100,10 +112,11 @@ namespace TrianglePegGameSolver.Web.Features.Home.Store
             {
                 Board = new Domain.PegBoard(),
                 CurrentMove = null,
-                HasSolution = false,
+                SolutionAttempted = false,
                 Moves = null,
                 CurrentMoveIndex = 0,
                 IsLoading = false,
+                FoundSolution = false
             };
         }
     }

@@ -27,8 +27,16 @@ namespace TrianglePegGameSolver.Web.Features.Home.Store.Effects
 
                 var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = action.Board });
 
-                _logger.LogInformation("Board Solved successfully!");
-                dispatcher.Dispatch(new SolvedResultAction { BoardQueryResponse = result });
+                if (result.SuccessfullySolved)
+                {
+                    _logger.LogInformation("Board Solved successfully!");
+                    dispatcher.Dispatch(new SolvedResultAction { Moves = result.Moves });
+                }
+                else
+                {
+                    _logger.LogInformation("Board Failed to solve! {Request}", action);
+                    dispatcher.Dispatch(new FailedToSolveResultAction());
+                }
             }
             catch (Exception e)
             {
