@@ -12,8 +12,9 @@
                 <div class="hidden md:flex">
                     <div class="ml-10 flex items-baseline space-x-4">
                         <NavigationLink Href="solve" Text="Solve"></NavigationLink>
+                        <NavigationLink Href="play" Text="Play"></NavigationLink>
                         <NavigationLink Href="counter" Text="Counter"></NavigationLink>
-                        <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true"></NavigationLink>
+                        <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true" NewTab="true"></NavigationLink>
                     </div>
                 </div>
             </div>
@@ -30,9 +31,10 @@
     <!-- Mobile menu -->
     <div class="md:hidden">
         <div class="@NavMenuCssClass px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            <NavigationLink Href="#" Text="Home" IsBlock="true"></NavigationLink>
+            <NavigationLink Href="solve" Text="Solve" IsBlock="true"></NavigationLink>
+            <NavigationLink Href="play" Text="Play" IsBlock="true"></NavigationLink>
             <NavigationLink Href="counter" Text="Counter" IsBlock="true"></NavigationLink>
-            <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true"></NavigationLink>
+            <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true" NewTab="true"></NavigationLink>
         </div>
     </div>
 </nav>
