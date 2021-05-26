@@ -2,9 +2,11 @@
 @page "/Play"
 @using TrianglePegGameSolver.Web.Features.PlayGame.Components
 @using TrianglePegGameSolver.Web.Features.PlayGame.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
 
 @inject IDispatcher _dispatcher
 @inject IState<PlayGameState> _state
+@inject NavigationManager _navigationManager
 
 <PageTitle Title="Triangle Peg Game - Play" />
 
@@ -84,7 +86,8 @@
         _showSolveModal = false;
         if (selection)
         {
-            _dispatcher.Dispatch(new RestartAction());
+            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+            _navigationManager.NavigateTo("/Solve");
         }
     }
 

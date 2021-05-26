@@ -74,19 +74,24 @@ namespace TrianglePegGameSolver.Web.Features.Home.Store
         }
 
         [ReducerMethod]
-        public static SolveState OnSolvedResultAction(SolveState _, SolvedResultAction action)
+        public static SolveState OnSolvedResultAction(SolveState state, SolvedResultAction action)
         {
             var moves = action.BoardQueryResponse.Moves;
-            var move = moves.First();
-            return new SolveState
+            if (moves != null && moves.Any())
             {
-                CurrentMove = move,
-                CurrentMoveIndex = 0,
-                Board = move.Board,
-                IsLoading = false,
-                Moves = moves,
-                HasSolution = true
-            };
+                var move = moves.First();
+                return state with
+                {
+                    CurrentMove = move,
+                    CurrentMoveIndex = 0,
+                    Board = move.Board,
+                    IsLoading = false,
+                    Moves = moves,
+                    HasSolution = true
+                };
+            }
+
+            return GetResetSolveState();
         }
 
         private static SolveState GetResetSolveState()
