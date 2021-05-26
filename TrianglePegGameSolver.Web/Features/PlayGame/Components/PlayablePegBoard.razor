@@ -7,9 +7,16 @@
 @inject IDispatcher _dispatcher
 @inject IState<PlayGameState> _state
 
-<PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked" ShowNumbers="false"></PegBoard>
+<label class="select-none cursor-pointer">
+    <input type="checkbox" @onchange="args => { Check(args); }" />
+    Show Numbers
+</label>
+
+<PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked" ShowNumbers="_showNumbers"></PegBoard>
 
 @code{
+
+    private bool _showNumbers = false;
 
     private void PegClicked(PegHole hole)
     {
@@ -42,6 +49,11 @@
             return PegStyle.Filled;
         }
         return PegStyle.Empty;
+    }
+
+    private void Check(ChangeEventArgs args)
+    {
+        _showNumbers = !_showNumbers;
     }
 
 }
