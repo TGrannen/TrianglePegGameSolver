@@ -22,15 +22,24 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
         }
 
         [ReducerMethod(typeof(RestartAction))]
-        public static PlayGameState OnRestart(PlayGameState _)
+        public static PlayGameState OnRestart(PlayGameState state)
         {
-            return new PlayGameState
+            return state with
             {
                 Board = new Domain.PegBoard(),
                 Moves = new Stack<PegMoveWithBoard>(),
                 From = null,
                 To = null,
                 StartingHoleSelected = false
+            };
+        }
+
+        [ReducerMethod]
+        public static PlayGameState OnSetShowPegNumbersAction(PlayGameState state, SetShowPegNumbersAction action)
+        {
+            return state with
+            {
+                ShowPegNumbers = action.ShowNumbers
             };
         }
 
