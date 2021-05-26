@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using TrianglePegGameSolver.Application.Play.Command.MakeMove;
 using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard;
 using TrianglePegGameSolver.Domain;
 
@@ -25,22 +26,34 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Effects
             {
                 _logger.LogInformation("Performing Move...");
 
-                var result = await _mediator.Send(new SolvePegBoardQuery { PegBoard = action.Board });
-
-                _logger.LogInformation("Move Performed successfully!");
-                dispatcher.Dispatch(new MoveMadeAction
+                var result = await _mediator.Send(new MakeMoveCommand
                 {
-                    MoveWithBoard = new PegMoveWithBoard
-                    {
-                        Board = action.Board,
-                        Move = new PegMove
-                        {
-                            From = action.From,
-                            To = action.To
-                        }
-                    },
-                    NewBoard = new Domain.PegBoard() // TODO: get from query
+                    From = action.From,
+                    To = action.To,
+                    PegBoard = action.Board
                 });
+
+                if (result.IsValidMove)
+                {
+                    _logger.LogInformation("Move Performed successfully!");
+                    dispatcher.Dispatch(new MoveMadeAction
+                    {
+                        MoveWithBoard = new PegMoveWithBoard
+                        {
+                            Board = action.Board,
+                            Move = new PegMove
+                            {
+                                From = action.From,
+                                To = action.To
+                            }
+                        },
+                        NewBoard = result.NewBoard
+                    });
+                }
+                else
+                {
+                    _logger.LogWarning("Not a valid move! {@Move}", action);
+                }
             }
             catch (Exception e)
             {
