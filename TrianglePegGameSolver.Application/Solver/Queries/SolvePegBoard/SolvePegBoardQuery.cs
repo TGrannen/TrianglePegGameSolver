@@ -23,7 +23,7 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
         {
             var moves = await Task.Run(() =>
             {
-                List<HistoricalMove> moves = new List<HistoricalMove>();
+                List<HistoricalMove> historicalMoves = new List<HistoricalMove>();
 
                 LegacyPegGame game = new LegacyPegGame();
 
@@ -35,13 +35,13 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
                     game.board.EmptyPeg(row, col);
                 }
 
-                game.EvalBoard(moves);
-                return moves;
+                game.EvalBoard(historicalMoves);
+                return historicalMoves;
             }, cancellationToken);
 
             return new SolvePegBoardQueryResponse
             {
-                SuccessfullySolved = true,
+                SuccessfullySolved = moves.Any(),
                 Moves = GetPegMoveWithBoards(moves, request.PegBoard.Clone())
             };
         }

@@ -6,7 +6,27 @@ namespace LegacyTrianglePegGame
     public class LegacyPegBoard
     {
         public LegacyPegLocation[,] boardArray;
-        public int pegsLeft = 14;
+
+        public int PegsLeft
+        {
+            get
+            {
+                int count = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    for (int j = 0; j < 5; j++)
+                    {
+                        var item = boardArray[i, j];
+                        if (item != null && item.isValid && item.filled)
+                        {
+                            count++;
+                        }
+                    }
+                }
+
+                return count;
+            }
+        }
 
         public void InitBoard()
         {
@@ -161,7 +181,6 @@ namespace LegacyTrianglePegGame
             move.fromLocation.filled = false;
             move.middleLocation.filled = false;
             move.toLocation.filled = true;
-            pegsLeft--;
         }
 
         public void UndoAMove(LegacyPegMove move)
@@ -169,7 +188,6 @@ namespace LegacyTrianglePegGame
             move.fromLocation.filled = true;
             move.middleLocation.filled = true;
             move.toLocation.filled = false;
-            pegsLeft++;
         }
 
         #endregion Moves
