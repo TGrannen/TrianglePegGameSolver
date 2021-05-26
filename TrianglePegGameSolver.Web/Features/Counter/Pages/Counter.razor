@@ -16,6 +16,6 @@
     private void IncrementCount()
     {
         Dispatcher.Dispatch(new CounterIncrementAction());
-        logger.LogInformation("Increment {Count}", CounterState.Value.CurrentCount);
+        logger.LogInformation("Increment {@Count}", new { Test = "Demo", Value = CounterState.Value.CurrentCount });
     }
 }

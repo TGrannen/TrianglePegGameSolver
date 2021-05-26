@@ -24,7 +24,7 @@ namespace TrianglePegGameSolver.Web
             builder.Services.AddApplication();
 
             Log.Logger = new LoggerConfiguration()
-                .WriteTo.BrowserConsole(outputTemplate: "{Timestamp:HH:mm:ss}-{Level:u3}{Message}{NewLine}{Exception}")
+                .ReadFrom.Configuration(builder.Configuration)
                 .CreateLogger();
 
             builder.Logging.SetMinimumLevel(LogLevel.None);
