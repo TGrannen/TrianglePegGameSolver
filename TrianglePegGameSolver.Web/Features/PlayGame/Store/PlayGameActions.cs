@@ -33,4 +33,9 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
     public class UndoMoveAction
     {
     }
+
+    public class SetAvailableMovesAction
+    {
+        public int MoveCount { get; set; }
+    }
 }

@@ -12,6 +12,7 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
         public PegHole From { get; init; }
         public PegHole To { get; init; }
         public bool StartingHoleSelected { get; init; }
+        public int AvailableMoves { get; init; } = -1;
     }
 
     public class PlayGameFeature : Feature<PlayGameState>
