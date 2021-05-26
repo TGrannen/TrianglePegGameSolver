@@ -11,17 +11,27 @@
 
 <PageTitle Title="Triangle Peg Game - Play" />
 
-<h1 class="text-3xl font-bold text-gray-900">
-    Play
-</h1>
+<div class="flex justify-between">
+    <h1 class="text-3xl font-bold text-gray-900">
+        Play
+    </h1>
+    @if (_state.Value.StartingHoleSelected)
+    {
+        <div class="self-center">
+            <Button OnClick="Restart" Text="Restart"></Button>
+        </div>
+    }
+</div>
 
-@if (_state.Value.StartingHoleSelected)
+@if (_state.Value.AvailableMoves == 0)
 {
-    <Button OnClick="Restart" Text="Restart"></Button>
+    <div class="flex justify-center my-2">
+        <EmojiSadIcon class="w-6 h-6"></EmojiSadIcon><span>Oh no! You're out of moves!</span>
+    </div>
 }
 
-<div class="flex flex-col lg:flex-row">
-    <div class="w-1/2 self-center lg:w-3/4">
+<div class="flex justify-center">
+    <div class="w-full lg:w-3/4">
         <PlayablePegBoard></PlayablePegBoard>
     </div>
 </div>
