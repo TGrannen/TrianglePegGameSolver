@@ -14,7 +14,7 @@
 
     private void PegClicked(PegHole hole)
     {
-        if (!_state.Value.HasSolution)
+        if (!_state.Value.SolutionAttempted)
         {
             hole.Filled = false;
             _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });

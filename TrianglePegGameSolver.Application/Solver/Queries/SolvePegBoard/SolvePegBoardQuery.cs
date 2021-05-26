@@ -19,27 +19,31 @@ namespace TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
     {
         private static readonly RowColConversion Conversion = new RowColConversion();
 
-        public Task<SolvePegBoardQueryResponse> Handle(SolvePegBoardQuery request, CancellationToken cancellationToken)
+        public async Task<SolvePegBoardQueryResponse> Handle(SolvePegBoardQuery request, CancellationToken cancellationToken)
         {
-            List<HistoricalMove> moves = new List<HistoricalMove>();
-
-            LegacyPegGame game = new LegacyPegGame();
-
-            game.InitGame();
-
-            foreach (var hole in request.PegBoard.Holes.Where(x => !x.Filled))
+            var moves = await Task.Run(() =>
             {
-                var (row, col) = Conversion.ConvertToGridLocation(hole.Number);
-                game.board.EmptyPeg(row, col);
-            }
+                List<HistoricalMove> historicalMoves = new List<HistoricalMove>();
 
-            game.EvalBoard(moves);
+                LegacyPegGame game = new LegacyPegGame();
 
-            return Task.FromResult(new SolvePegBoardQueryResponse
+                game.InitGame();
+
+                foreach (var hole in request.PegBoard.Holes.Where(x => !x.Filled))
+                {
+                    var (row, col) = Conversion.ConvertToGridLocation(hole.Number);
+                    game.board.EmptyPeg(row, col);
+                }
+
+                game.EvalBoard(historicalMoves);
+                return historicalMoves;
+            }, cancellationToken);
+
+            return new SolvePegBoardQueryResponse
             {
-                SuccessfullySolved = true,
+                SuccessfullySolved = moves.Any(),
                 Moves = GetPegMoveWithBoards(moves, request.PegBoard.Clone())
-            });
+            };
         }
 
         private static PegMove ConvertFromLegacy(LegacyPegMove move)

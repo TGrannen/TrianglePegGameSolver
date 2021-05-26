@@ -2,9 +2,11 @@
 @page "/Play"
 @using TrianglePegGameSolver.Web.Features.PlayGame.Components
 @using TrianglePegGameSolver.Web.Features.PlayGame.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
 
 @inject IDispatcher _dispatcher
 @inject IState<PlayGameState> _state
+@inject NavigationManager _navigationManager
 
 <PageTitle Title="Triangle Peg Game - Play" />
 
@@ -14,15 +16,12 @@
     </h1>
     @if (_state.Value.Moves.Any())
     {
-        <div class="self-center">
-            <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
-        </div>
+        <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
     }
     @if (_state.Value.StartingHoleSelected)
     {
-        <div class="self-center">
-            <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
-        </div>
+        <Button OnClick="Solve" Text="Solve"><CalculatorIcon class="w-6 h-6"></CalculatorIcon></Button>
+        <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
     }
 </div>
 
@@ -42,19 +41,25 @@
 {
     <RestartModal OnClose="OnRestartModalClose"></RestartModal>
 }
+@if (_showSolveModal)
+{
+    <SolveModal OnClose="OnSolveModalClose"></SolveModal>
+}
 
 @code
 {
+    private void UndoMove()
+    {
+        _dispatcher.Dispatch(new UndoMoveAction());
+    }
+
+    #region RestartModal
+
     private bool _showRestartModal = false;
 
     private void Restart()
     {
         _showRestartModal = true;
-    }
-
-    private void UndoMove()
-    {
-        _dispatcher.Dispatch(new UndoMoveAction());
     }
 
     private void OnRestartModalClose(bool selection)
@@ -65,4 +70,26 @@
             _dispatcher.Dispatch(new RestartAction());
         }
     }
+    #endregion
+
+    #region SolveModal
+
+    private bool _showSolveModal = false;
+
+    private void Solve()
+    {
+        _showSolveModal = true;
+    }
+
+    private void OnSolveModalClose(bool selection)
+    {
+        _showSolveModal = false;
+        if (selection)
+        {
+            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+            _navigationManager.NavigateTo("/Solve");
+        }
+    }
+
+    #endregion
 }
