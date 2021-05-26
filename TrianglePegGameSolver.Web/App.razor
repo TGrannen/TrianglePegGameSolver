@@ -6,7 +6,13 @@
     </Found>
     <NotFound>
         <LayoutView Layout="@typeof(MainLayout)">
-            <p>Sorry, there's nothing at this address.</p>
+            <div class="flex justify-center text-center">
+                <div class="shadow rounded bg-gray-100 p-4 md:w-1/2">
+                    <div class="text-6xl text-purple-500">404</div>
+                    <div class="text-4xl my-2">Oops! Page not found</div>
+                    <div class="text-2xl ">The page you are looking for does not exist. It might have been moved or deleted</div>
+                </div>
+            </div>
         </LayoutView>
     </NotFound>
 </Router>
