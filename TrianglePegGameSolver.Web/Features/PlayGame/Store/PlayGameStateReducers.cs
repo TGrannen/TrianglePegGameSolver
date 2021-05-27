@@ -63,6 +63,15 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
                 };
             }
 
+            if (action.PegHole.Filled)
+            {
+                return state with
+                {
+                    From = action.PegHole,
+                    To = null
+                };
+            }
+
             return state with
             {
                 To = action.PegHole
