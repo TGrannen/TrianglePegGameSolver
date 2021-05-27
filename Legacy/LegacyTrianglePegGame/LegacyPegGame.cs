@@ -59,7 +59,7 @@ namespace LegacyTrianglePegGame
 
             pastMoves.Add(hist);
 
-            if (board.pegsLeft == 1)
+            if (board.PegsLeft == 1)
             {
                 return true;
             }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard;
 
-namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
+namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
 {
     public static class PlayGameStateReducers
     {
@@ -22,15 +22,24 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
         }
 
         [ReducerMethod(typeof(RestartAction))]
-        public static PlayGameState OnRestart(PlayGameState _)
+        public static PlayGameState OnRestart(PlayGameState state)
         {
-            return new PlayGameState
+            return state with
             {
                 Board = new Domain.PegBoard(),
                 Moves = new Stack<PegMoveWithBoard>(),
                 From = null,
                 To = null,
                 StartingHoleSelected = false
+            };
+        }
+
+        [ReducerMethod]
+        public static PlayGameState OnSetShowPegNumbersAction(PlayGameState state, SetShowPegNumbersAction action)
+        {
+            return state with
+            {
+                ShowPegNumbers = action.ShowNumbers
             };
         }
 
@@ -50,6 +59,15 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
                 return state with
                 {
                     From = null,
+                    To = null
+                };
+            }
+
+            if (action.PegHole.Filled)
+            {
+                return state with
+                {
+                    From = action.PegHole,
                     To = null
                 };
             }
@@ -76,20 +94,28 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Reducers
             };
         }
 
+        [ReducerMethod]
+        public static PlayGameState SetAvailableMovesAction(PlayGameState state, SetAvailableMovesAction action)
+        {
+            return state with
+            {
+                AvailableMoves = action.MoveCount
+            };
+        }
+
         [ReducerMethod(typeof(UndoMoveAction))]
         public static PlayGameState UndoMoveAction(PlayGameState state)
         {
-            if (state.Moves.Count > 1)
+            if (state.Moves.Count > 0)
             {
-                state.Moves.Pop();
-
-                if (state.Moves.TryPeek(out PegMoveWithBoard result))
+                if (state.Moves.TryPop(out PegMoveWithBoard result))
                 {
                     return state with
                     {
                         From = null,
                         To = null,
-                        Board = result.Board
+                        Board = result.Board,
+                        Moves = state.Moves
                     };
                 }
             }

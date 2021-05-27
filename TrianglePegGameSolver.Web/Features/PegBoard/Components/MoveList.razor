@@ -28,7 +28,7 @@
     <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
         @if (_state.Value.Moves != null && _state.Value.Moves.Any())
         {
-            @foreach (var move in _state.Value.Moves.Select((x, i) => new { x.Move, MoveWithBoard = x, Index = i + 2 }))
+            @foreach (var move in _state.Value.Moves.Select((x, i) => new { x.Move, MoveWithBoard = x, Index = i + 1 }))
             {
                 <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm cursor-pointer select-none @BgClass(move.Index) hover:bg-gray-200" @onclick="x => MoveClicked(move.MoveWithBoard)">
                     <div class="w-0 flex-1 flex items-center">

@@ -1,4 +1,14 @@
-﻿<button class="px-5 rounded-md bg-blue-500 text-white" @onclick="Click">@Text</button>
+﻿@if (ChildContent != null)
+{
+    <button class="px-5 py-1 rounded-md bg-blue-500 text-white flex" @onclick="Click">
+        @ChildContent
+        <span class="mx-2">@Text</span>
+    </button>
+}
+else
+{
+    <button class="px-5 rounded-md bg-blue-500 text-white" @onclick="Click">@Text</button>
+}
 
 @code {
     [Parameter]
@@ -6,6 +16,8 @@
 
     [Parameter]
     public EventCallback<EventArgs> OnClick { get; set; }
+
+    [Parameter] public RenderFragment ChildContent { get; set; }
 
     private async Task Click()
     {

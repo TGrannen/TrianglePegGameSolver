@@ -1,35 +1,123 @@
 ﻿@inherits FluxorComponent
 @page "/Play"
-@using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.PlayGame.Components
-@using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
-@using TrianglePegGameSolver.Domain
 @using TrianglePegGameSolver.Web.Features.PlayGame.Store
+@using TrianglePegGameSolver.Web.Features.Home.Store.Actions
 
 @inject IDispatcher _dispatcher
 @inject IState<PlayGameState> _state
+@inject NavigationManager _navigationManager
 
 <PageTitle Title="Triangle Peg Game - Play" />
 
-<h1 class="text-3xl font-bold text-gray-900">
-    Play
-</h1>
+<div class="flex justify-between">
+    <h1 class="text-3xl font-bold text-gray-900">
+        Play
+    </h1>
+    @if (_state.Value.Moves.Any())
+    {
+        <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
+    }
+    @if (_state.Value.StartingHoleSelected)
+    {
+        <Button OnClick="Solve" Text="Solve"><CalculatorIcon class="w-6 h-6"></CalculatorIcon></Button>
+        <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
+    }
+</div>
 
-@if (_state.Value.StartingHoleSelected)
+@if (_showOutOfMovesModal)
 {
-    <Button OnClick="Restart" Text="Restart"></Button>
+    <OutOfMovesModal OnClose="OnOutOfMovesModalClose"></OutOfMovesModal>
 }
 
-<div class="flex flex-col lg:flex-row">
-    <div class="w-1/2 self-center lg:w-3/4">
+<div class="flex justify-center">
+    <div class="w-full lg:w-3/4">
         <PlayablePegBoard></PlayablePegBoard>
     </div>
 </div>
+@if (_showRestartModal)
+{
+    <RestartModal OnClose="OnRestartModalClose"></RestartModal>
+}
+@if (_showSolveModal)
+{
+    <SolveModal OnClose="OnSolveModalClose"></SolveModal>
+}
 
 @code
 {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _state.StateChanged += (sender, state) =>
+        {
+            _showOutOfMovesModal = state.AvailableMoves == 0 && state.StartingHoleSelected;
+        };
+    }
+
+    private void UndoMove()
+    {
+        _dispatcher.Dispatch(new UndoMoveAction());
+    }
+
+    #region RestartModal
+
+    private bool _showRestartModal = false;
+
     private void Restart()
     {
-        _dispatcher.Dispatch(new RestartAction());
+        _showRestartModal = true;
     }
+
+    private void OnRestartModalClose(bool selection)
+    {
+        _showRestartModal = false;
+        if (selection)
+        {
+            _dispatcher.Dispatch(new RestartAction());
+        }
+    }
+    #endregion
+
+    #region SolveModal
+
+    private bool _showSolveModal = false;
+
+    private void Solve()
+    {
+        _showSolveModal = true;
+    }
+
+    private void OnSolveModalClose(bool selection)
+    {
+        _showSolveModal = false;
+        if (selection)
+        {
+            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+            _navigationManager.NavigateTo("/Solve");
+        }
+    }
+
+    #endregion
+
+    #region OutOfMovesModal
+
+    private bool _showOutOfMovesModal = false;
+
+    private void OnOutOfMovesModalClose(OutOfMovesModal.OutOfMovesModalResult selection)
+    {
+        _showOutOfMovesModal = false;
+
+        switch (selection)
+        {
+            case OutOfMovesModal.OutOfMovesModalResult.Restart:
+                _dispatcher.Dispatch(new RestartAction());
+                break;
+            case OutOfMovesModal.OutOfMovesModalResult.Undo:
+                _dispatcher.Dispatch(new UndoMoveAction());
+                break;
+        }
+    }
+
+    #endregion
 }
