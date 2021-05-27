@@ -25,11 +25,9 @@
     }
 </div>
 
-@if (_state.Value.AvailableMoves == 0)
+@if (_showOutOfMovesModal)
 {
-    <div class="flex justify-center my-2">
-        <EmojiSadIcon class="w-6 h-6"></EmojiSadIcon><span>Oh no! You're out of moves!</span>
-    </div>
+    <OutOfMovesModal OnClose="OnOutOfMovesModalClose"></OutOfMovesModal>
 }
 
 <div class="flex justify-center">
@@ -48,6 +46,15 @@
 
 @code
 {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _state.StateChanged += (sender, state) =>
+        {
+            _showOutOfMovesModal = state.AvailableMoves == 0 && state.StartingHoleSelected;
+        };
+    }
+
     private void UndoMove()
     {
         _dispatcher.Dispatch(new UndoMoveAction());
@@ -88,6 +95,27 @@
         {
             _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
             _navigationManager.NavigateTo("/Solve");
+        }
+    }
+
+    #endregion
+
+    #region OutOfMovesModal
+
+    private bool _showOutOfMovesModal = false;
+
+    private void OnOutOfMovesModalClose(OutOfMovesModal.OutOfMovesModalResult selection)
+    {
+        _showOutOfMovesModal = false;
+
+        switch (selection)
+        {
+            case OutOfMovesModal.OutOfMovesModalResult.Restart:
+                _dispatcher.Dispatch(new RestartAction());
+                break;
+            case OutOfMovesModal.OutOfMovesModalResult.Undo:
+                _dispatcher.Dispatch(new UndoMoveAction());
+                break;
         }
     }
 
