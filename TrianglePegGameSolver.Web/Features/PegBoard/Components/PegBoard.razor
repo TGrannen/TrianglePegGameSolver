@@ -5,39 +5,55 @@
 @if (Holes != null && Holes.Any())
 {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -5 50 50">
-        <polygon stroke="#8f8f8f" points="  1.5,32    17.97,0    35,32   " fill="#39bda7" id="svg_poly" />
+        <polygon stroke="#8f8f8f" points="  1.5,32    17.97,0    35,32   " fill="#39bda7" id="svg_poly"/>
         <g>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_0" cx="120" cy="30" fill="@GetColor(Holes[0].Style )" @onclick="x =>  PegClicked(Holes[0].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_1" cx="100" cy="69" fill="@GetColor(Holes[1].Style )" @onclick="x =>  PegClicked(Holes[1].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_2" cx="140" cy="69" fill="@GetColor(Holes[2].Style )" @onclick="x =>  PegClicked(Holes[2].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_3" cx="80" cy="109" fill="@GetColor(Holes[3].Style )" @onclick="x =>  PegClicked(Holes[3].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_4" cx="120" cy="109" fill="@GetColor(Holes[4].Style )" @onclick="x => PegClicked(Holes[4].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_5" cx="160" cy="109" fill="@GetColor(Holes[5].Style )" @onclick="x => PegClicked(Holes[5].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_6" cx="60" cy="148" fill="@GetColor(Holes[6].Style )" @onclick="x =>  PegClicked(Holes[6].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_7" cx="100" cy="148" fill="@GetColor(Holes[7].Style )" @onclick="x => PegClicked(Holes[7].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_8" cx="140" cy="148" fill="@GetColor(Holes[8].Style )" @onclick="x => PegClicked(Holes[8].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_9" cx="180" cy="148" fill="@GetColor(Holes[9].Style )" @onclick="x => PegClicked(Holes[9].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_10" cx="40" cy="188" fill="@GetColor(Holes[10].Style)" @onclick="x =>  PegClicked(Holes[10].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_11" cx="80" cy="188" fill="@GetColor(Holes[11].Style)" @onclick="x =>  PegClicked(Holes[11].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_12" cx="120" cy="188" fill="@GetColor(Holes[12].Style)" @onclick="x => PegClicked(Holes[12].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_13" cx="160" cy="188" fill="@GetColor(Holes[13].Style)" @onclick="x => PegClicked(Holes[13].Hole)"></ellipse>
-            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_14" cx="200" cy="188" fill="@GetColor(Holes[14].Style)" @onclick="x => PegClicked(Holes[14].Hole)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_0" cx="120" cy="30" fill="@GetColor(Holes[0].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_1" cx="100" cy="69" fill="@GetColor(Holes[1].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_2" cx="140" cy="69" fill="@GetColor(Holes[2].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_3" cx="80" cy="109" fill="@GetColor(Holes[3].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_4" cx="120" cy="109" fill="@GetColor(Holes[4].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_5" cx="160" cy="109" fill="@GetColor(Holes[5].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_6" cx="60" cy="148" fill="@GetColor(Holes[6].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_7" cx="100" cy="148" fill="@GetColor(Holes[7].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_8" cx="140" cy="148" fill="@GetColor(Holes[8].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_9" cx="180" cy="148" fill="@GetColor(Holes[9].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_10" cx="40" cy="188" fill="@GetColor(Holes[10].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_11" cx="80" cy="188" fill="@GetColor(Holes[11].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_12" cx="120" cy="188" fill="@GetColor(Holes[12].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_13" cx="160" cy="188" fill="@GetColor(Holes[13].Style)"></ellipse>
+            <ellipse stroke="#8f8f8f" transform="scale(0.15)" ry="8" rx="8" id="svg_14" cx="200" cy="188" fill="@GetColor(Holes[14].Style)"></ellipse>
 
-            <text transform="scale(0.10)" y="70" x="175" class="@(!ShowNumbers?"hidden":"")">1</text>
-            <text transform="scale(0.10)" y="129" x="146" class="@(!ShowNumbers?"hidden":"")">2</text>
-            <text transform="scale(0.10)" y="129" x="206" class="@(!ShowNumbers?"hidden":"")">3</text>
-            <text transform="scale(0.10)" y="190" x="115" class="@(!ShowNumbers?"hidden":"")">4</text>
-            <text transform="scale(0.10)" y="190" x="175" class="@(!ShowNumbers?"hidden":"")">5</text>
-            <text transform="scale(0.10)" y="190" x="237" class="@(!ShowNumbers?"hidden":"")">6</text>
-            <text transform="scale(0.10)" y="250" x="84" class="@(!ShowNumbers?"hidden":"")">7</text>
-            <text transform="scale(0.10)" y="250" x="146" class="@(!ShowNumbers?"hidden":"")">8</text>
-            <text transform="scale(0.10)" y="250" x="206" class="@(!ShowNumbers?"hidden":"")">9</text>
-            <text transform="scale(0.10)" y="250" x="261" class="@(!ShowNumbers?"hidden":"")">10</text>
-            <text transform="scale(0.10)" y="309" x="51" class="@(!ShowNumbers?"hidden":"")">11</text>
-            <text transform="scale(0.10)" y="309" x="112" class="@(!ShowNumbers?"hidden":"")">12</text>
-            <text transform="scale(0.10)" y="309" x="170" class="@(!ShowNumbers?"hidden":"")">13</text>
-            <text transform="scale(0.10)" y="309" x="231" class="@(!ShowNumbers?"hidden":"")">14</text>
-            <text transform="scale(0.10)" y="309" x="292" class="@(!ShowNumbers?"hidden":"")">15</text>
+            <text transform="scale(0.10)" y="70" x="175" class="@(!ShowNumbers ? "hidden" : "")">1</text>
+            <text transform="scale(0.10)" y="129" x="146" class="@(!ShowNumbers ? "hidden" : "")">2</text>
+            <text transform="scale(0.10)" y="129" x="206" class="@(!ShowNumbers ? "hidden" : "")">3</text>
+            <text transform="scale(0.10)" y="190" x="115" class="@(!ShowNumbers ? "hidden" : "")">4</text>
+            <text transform="scale(0.10)" y="190" x="175" class="@(!ShowNumbers ? "hidden" : "")">5</text>
+            <text transform="scale(0.10)" y="190" x="237" class="@(!ShowNumbers ? "hidden" : "")">6</text>
+            <text transform="scale(0.10)" y="250" x="84" class="@(!ShowNumbers ? "hidden" : "")">7</text>
+            <text transform="scale(0.10)" y="250" x="146" class="@(!ShowNumbers ? "hidden" : "")">8</text>
+            <text transform="scale(0.10)" y="250" x="206" class="@(!ShowNumbers ? "hidden" : "")">9</text>
+            <text transform="scale(0.10)" y="250" x="261" class="@(!ShowNumbers ? "hidden" : "")">10</text>
+            <text transform="scale(0.10)" y="309" x="51" class="@(!ShowNumbers ? "hidden" : "")">11</text>
+            <text transform="scale(0.10)" y="309" x="112" class="@(!ShowNumbers ? "hidden" : "")">12</text>
+            <text transform="scale(0.10)" y="309" x="170" class="@(!ShowNumbers ? "hidden" : "")">13</text>
+            <text transform="scale(0.10)" y="309" x="231" class="@(!ShowNumbers ? "hidden" : "")">14</text>
+            <text transform="scale(0.10)" y="309" x="292" class="@(!ShowNumbers ? "hidden" : "")">15</text>
+
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_0" cx="120" cy="34" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[0].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_1" cx="100" cy="73" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[1].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_2" cx="140" cy="73" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[2].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_3" cx="80" cy="113" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[3].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_4" cx="120" cy="113" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[4].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_5" cx="160" cy="113" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[5].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_6" cx="60" cy="152" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[6].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_7" cx="100" cy="152" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[7].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_8" cx="140" cy="152" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[8].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_9" cx="180" cy="152" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[9].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_10" cx="40" cy="192" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[10].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_11" cx="80" cy="192" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[11].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_12" cx="120" cy="192" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[12].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_13" cx="160" cy="192" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[13].Hole)"></ellipse>
+            <ellipse transform="scale(0.15)" ry="17" rx="16" id="svg_14" cx="200" cy="192" class="cursor-pointer" fill="@_clickColor" @onclick="x => PegClicked(Holes[14].Hole)"></ellipse>
         </g>
     </svg>
 }
@@ -67,16 +83,18 @@
             PegStyle.ToBeRemoved => _pegRemovedColor,
             PegStyle.Selected => _pegSelectedColor,
             _ => throw new ArgumentOutOfRangeException()
-        };
+            };
     }
 
     string _pegColor = "#FFE7A2";
     string _pegEmptyColor = "#CECECE";
     string _pegRemovedColor = "#c33a3a";
     string _pegSelectedColor = "#4f52b9";
+    string _clickColor = "#FCFCFC00";
 
     private async Task Clicked()
     {
         await OnClick.InvokeAsync();
     }
+
 }
