@@ -1,10 +1,14 @@
-﻿@if (NewTab)
+﻿@using TrianglePegGameSolver.Web.Features.Navigation.Store
+@inject NavigationManager _navigationManager
+@inject IDispatcher _dispatcher
+
+@if (NewTab)
 {
-    <a href="@Href" class="text-gray-300 hover:bg-gray-700 hover:text-white select-none @(IsBlock?"block":"") px-3 py-2 rounded-md text-sm font-medium" target="_blank">@Text</a>
+    <a href="@Href" class="text-gray-300 hover:bg-gray-700 hover:text-white select-none @(IsBlock ? "block" : "") px-3 py-2 rounded-md text-sm font-medium" target="_blank">@Text</a>
 }
 else
 {
-    <a href="@Href" class="text-gray-300 hover:bg-gray-700 hover:text-white select-none @(IsBlock?"block":"") px-3 py-2 rounded-md text-sm font-medium">@Text</a>
+    <a href="javascript: void(0)" @onclick="Click" class="text-gray-300 hover:bg-gray-700 hover:text-white select-none @(IsBlock ? "block" : "") px-3 py-2 rounded-md text-sm font-medium">@Text</a>
 }
 
 @code {
@@ -20,5 +24,11 @@ else
 
     [Parameter]
     public bool NewTab { get; set; } = false;
+
+    private void Click()
+    {
+        _navigationManager.NavigateTo(Href);
+        _dispatcher.Dispatch(new NavigationAction {Open = false});
+    }
 
 }

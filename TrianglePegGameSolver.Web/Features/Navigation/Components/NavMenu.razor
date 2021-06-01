@@ -1,4 +1,8 @@
-﻿<nav class="bg-gray-800">
+﻿@using TrianglePegGameSolver.Web.Features.Navigation.Store
+@inherits FluxorComponent
+@inject IState<NavigationState> _state
+
+<nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
@@ -20,7 +24,7 @@
             </NavLink>
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
-                <MenuButton @bind-ShowMenu="showMenu"></MenuButton>
+                <MenuButton></MenuButton>
             </div>
         </div>
     </div>
@@ -36,7 +40,6 @@
 </nav>
 
 @code {
-    private bool showMenu = false;
-    private string NavMenuCssClass => showMenu ? "block" : "hidden";
+    private string NavMenuCssClass => _state.Value.Open ? "block" : "hidden";
 
 }
