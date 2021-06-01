@@ -8,7 +8,7 @@
 @inject IDispatcher _dispatcher
 @inject IState<SolveState> _state
 
-<PegBoard Holes="GetSolvedHoleDetailList()" OnClick="PegClicked"></PegBoard>
+<PegBoard Holes="GetSolvedHoleDetailList()" AllowClicks="!_state.Value.FoundSolution" OnClick="PegClicked"></PegBoard>
 
 @code{
 

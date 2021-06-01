@@ -1,0 +1,26 @@
+﻿@using TrianglePegGameSolver.Web.Features.Navigation.Store
+@inherits FluxorComponent
+@inject IState<NavigationState> _state
+@inject IDispatcher _dispatcher
+
+<button @onclick="ToggleNavMenu" type="button" class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+    <span class="sr-only">Open main menu</span>
+    <MenuIcon class="@MenuIconCssClass"></MenuIcon>
+    <XIcon class="@XIconCssClass"></XIcon>
+</button>
+
+@code {
+
+    [Parameter]
+    public bool ShowMenu { get; set; }
+
+
+    private string XIconCssClass => _state.Value.Open ? "block h-6 w-6 " : "hidden h-6 w-6 ";
+    private string MenuIconCssClass => _state.Value.Open ? "hidden h-6 w-6 " : "block h-6 w-6 ";
+
+    private async Task ToggleNavMenu()
+    {
+        _dispatcher.Dispatch(new NavigationAction {Open = !_state.Value.Open});
+    }
+
+}

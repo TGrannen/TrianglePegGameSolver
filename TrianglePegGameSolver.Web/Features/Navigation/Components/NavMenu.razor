@@ -1,16 +1,14 @@
-﻿@using TrianglePegGameSolver.Web.Shared.Components
+﻿@using TrianglePegGameSolver.Web.Features.Navigation.Store
+@inherits FluxorComponent
+@inject IState<NavigationState> _state
 
 <nav class="bg-gray-800">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
             <div class="flex items-center">
-                <div class="flex-shrink-0">
-                    <div class="h-8 w-8">
-                        <Logo></Logo>
-                    </div>
-                </div>
+                <Logo></Logo>
                 <div class="hidden md:flex">
-                    <div class="ml-10 flex items-baseline space-x-4">
+                    <div class="ml-8 flex items-baseline space-x-4">
                         <NavigationLink Href="solve" Text="Solve"></NavigationLink>
                         <NavigationLink Href="play" Text="Play"></NavigationLink>
                         <NavigationLink Href="http://blazor.net" Text="Blazor" IsBlock="true" NewTab="true"></NavigationLink>
@@ -22,7 +20,7 @@
             </NavLink>
             <div class="-mr-2 flex md:hidden">
                 <!-- Mobile menu button -->
-                <MenuButton @bind-ShowMenu="showMenu"></MenuButton>
+                <MenuButton></MenuButton>
             </div>
         </div>
     </div>
@@ -38,7 +36,6 @@
 </nav>
 
 @code {
-    private bool showMenu = false;
-    private string NavMenuCssClass => showMenu ? "block" : "hidden";
+    private string NavMenuCssClass => _state.Value.Open ? "block" : "hidden";
 
 }

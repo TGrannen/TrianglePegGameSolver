@@ -46,6 +46,7 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
         [ReducerMethod]
         public static PlayGameState SelectPegAction(PlayGameState state, SelectPegAction action)
         {
+            // Select Peg
             if (state.From == null)
             {
                 return state with
@@ -53,7 +54,8 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
                     From = action.PegHole
                 };
             }
-
+            
+            // Deselect Peg
             if (state.From.Number == action.PegHole.Number)
             {
                 return state with
@@ -63,6 +65,7 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
                 };
             }
 
+            // Change selected peg when already selected
             if (action.PegHole.Filled)
             {
                 return state with
@@ -71,7 +74,8 @@ namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
                     To = null
                 };
             }
-
+    
+            // Selected hole is the To hole
             return state with
             {
                 To = action.PegHole

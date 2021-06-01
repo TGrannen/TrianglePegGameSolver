@@ -11,7 +11,7 @@
 @inject IDispatcher _dispatcher
 @inject IState<SolveState> _state
 
-<PageTitle Title="Triangle Peg Game - Solve" />
+<PageTitle Title="Triangle Peg Game - Solve"/>
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve
@@ -26,7 +26,7 @@
         <Button OnClick="Reset" Text="Reset"></Button>
     </div>
 }
-<div class="flex flex-col lg:flex-row">
+<div class="flex flex-col mt-2 lg:flex-row">
     @if (_state.Value.IsLoading)
     {
         <div class="self-center my-6 lg:w-full lg:flex lg:justify-center">
@@ -35,32 +35,25 @@
     }
     else
     {
-        if (_state.Value.SolutionAttempted)
+        if (_state.Value.SolutionAttempted && !_state.Value.FoundSolution)
         {
+            <div class="rounded-md bg-red-300 p-2 text-red-900 my-3 border-red-900 border-2">
+                <div>Failed to find solution!</div>
+            </div>
+        }
+        else
+        {
+            <div class="w-full flex mb-5 lg:mb-0 justify-center @(_state.Value.FoundSolution ? "lg:w-3/4" : "")">
+                <SolvedPegBoard></SolvedPegBoard>
+            </div>
+
             if (_state.Value.FoundSolution)
             {
-                <div class="w-full self-center lg:w-3/4">
-                    <SolvedPegBoard></SolvedPegBoard>
-                </div>
                 <div class="lg:w-1/4">
                     <MoveList></MoveList>
                 </div>
             }
-            else
-            {
-                <div class="rounded-md bg-red-300 p-2 text-red-900 my-3 border-red-900 border-2">
-                    <div>Failed to find solution!</div>
-                </div>
-            }
-
         }
-        else
-        {
-            <div class="w-3/4 self-center">
-                <SolvedPegBoard></SolvedPegBoard>
-            </div>
-        }
-
     }
 </div>
 
