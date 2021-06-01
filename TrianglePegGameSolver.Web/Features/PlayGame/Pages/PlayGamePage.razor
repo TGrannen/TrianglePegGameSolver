@@ -8,21 +8,31 @@
 @inject IState<PlayGameState> _state
 @inject NavigationManager _navigationManager
 
-<PageTitle Title="Triangle Peg Game - Play" />
+<PageTitle Title="Triangle Peg Game - Play"/>
 
-<div class="flex justify-between">
-    <h1 class="text-3xl font-bold text-gray-900">
-        Play
-    </h1>
-    @if (_state.Value.Moves.Any())
-    {
-        <Button OnClick="UndoMove" Text="Undo"><ReplyIcon class="w-6 h-6"></ReplyIcon></Button>
-    }
-    @if (_state.Value.StartingHoleSelected)
-    {
-        <Button OnClick="Solve" Text="Solve"><CalculatorIcon class="w-6 h-6"></CalculatorIcon></Button>
-        <Button OnClick="Restart" Text="Restart"><XCircleIcon class="w-6 h-6"></XCircleIcon></Button>
-    }
+<h1 class="text-3xl font-bold text-gray-900">
+    Play
+</h1>
+
+<div class="mt-2 flex justify-center">
+    <div class="flex-1 flex justify-center gap-2 flex-wrap lg:max-w-lg lg:gap-8">
+
+        @if (_state.Value.Moves.Any())
+        {
+            <Button Class="mb-2" OnClick="UndoMove" Text="Undo">
+                <ReplyIcon class="w-6 h-6"></ReplyIcon>
+            </Button>
+        }
+        @if (_state.Value.StartingHoleSelected)
+        {
+            <Button Class="mb-2" OnClick="Solve" Text="Solve">
+                <CalculatorIcon class="w-6 h-6"></CalculatorIcon>
+            </Button>
+            <Button Class="mb-2" OnClick="Restart" Text="Restart">
+                <XCircleIcon class="w-6 h-6"></XCircleIcon>
+            </Button>
+        }
+    </div>
 </div>
 
 @if (_showOutOfMovesModal)
@@ -49,10 +59,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _state.StateChanged += (sender, state) =>
-        {
-            _showOutOfMovesModal = state.AvailableMoves == 0 && state.StartingHoleSelected;
-        };
+        _state.StateChanged += (sender, state) => { _showOutOfMovesModal = state.AvailableMoves == 0 && state.StartingHoleSelected; };
     }
 
     private void UndoMove()
@@ -77,6 +84,7 @@
             _dispatcher.Dispatch(new RestartAction());
         }
     }
+
     #endregion
 
     #region SolveModal
@@ -93,7 +101,7 @@
         _showSolveModal = false;
         if (selection)
         {
-            _dispatcher.Dispatch(new SolveAction { Board = _state.Value.Board });
+            _dispatcher.Dispatch(new SolveAction {Board = _state.Value.Board});
             _navigationManager.NavigateTo("/Solve");
         }
     }

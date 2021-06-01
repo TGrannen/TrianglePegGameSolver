@@ -1,5 +1,5 @@
 {
-  "name": "TrianglePegGameSolver.Web",
+  "name": "Triangle Peg Game Solver",
   "short_name": "TrianglePegGameSolver.Web",
   "start_url": "./",
   "display": "standalone",
@@ -7,9 +7,9 @@
   "theme_color": "#03173d",
   "icons": [
     {
-      "src": "icon-512.png",
+      "src": "Logo-512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x490"
     }
   ]
 }
