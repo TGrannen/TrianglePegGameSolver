@@ -6,6 +6,8 @@ using Serilog;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Blazor.Analytics;
+using Microsoft.Extensions.Configuration;
 using TrianglePegGameSolver.Application;
 
 namespace TrianglePegGameSolver.Web
@@ -22,6 +24,9 @@ namespace TrianglePegGameSolver.Web
             builder.Services.AddFluxor(o => o.ScanAssemblies(typeof(Program).Assembly).UseReduxDevTools());
 
             builder.Services.AddApplication();
+
+            var trackingId = builder.Configuration.GetValue<string>("Analytics:GoogleTag");
+            builder.Services.AddGoogleAnalytics(trackingId);
 
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(builder.Configuration)
