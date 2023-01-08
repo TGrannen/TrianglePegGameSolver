@@ -50,6 +50,14 @@ jobs:
       - name: Publish Client
         run: dotnet publish --configuration release --no-restore --output temp
         working-directory: TrianglePegGameSolver.Web
+        
+      - name: Delete extra BR files
+        working-directory: TrianglePegGameSolver.Web/temp/wwwroot
+        run: find . -name '*.br' -delete
+
+      - name: Delete extra GZ files
+        working-directory: TrianglePegGameSolver.Web/temp/wwwroot
+        run: find . -name '*.gz' -delete
 
       - name: Build And Deploy Static Web App to Prod
         uses: Azure/static-web-apps-deploy@v1
