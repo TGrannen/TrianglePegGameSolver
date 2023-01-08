@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacyTrianglePegGame", "Le
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{91AEE7B0-FC19-485E-9DF9-1B3FDAE5C581}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7BC18FA1-B2CB-4AFE-8C67-D522DD29E52C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Cloud.Infrastructure", "infrastructure\TrianglePegGameSolver.Cloud.Infrastructure.csproj", "{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +45,17 @@ Global
 		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA} = {91AEE7B0-FC19-485E-9DF9-1B3FDAE5C581}
+		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F} = {7BC18FA1-B2CB-4AFE-8C67-D522DD29E52C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {3CC605F8-91EF-4B73-86AC-3629396DE3B5}

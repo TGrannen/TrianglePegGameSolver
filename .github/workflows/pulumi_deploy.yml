@@ -1,0 +1,39 @@
+name: Pulumi-Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - main
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/pulumi_deploy.yml'
+
+jobs:
+  deploy-prod:
+    name: Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 7.0.x
+
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: ${{ secrets.PULUMI_ORG }}/triangle-peg-game/prod
+          work-dir: ./infrastructure
+          config-map: "{
+            repo-token: {value: ${{ github.token }}, secret: true},
+            domain: {value: pingpongstats.${{ secrets.DOMAIN }}, secret: false},
+            notification-emails: {value: ${{ secrets.BUDGET_NOTIFICATION_EMAILS }}, secret: false},
+          }"
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+          ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
