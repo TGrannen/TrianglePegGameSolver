@@ -26,6 +26,7 @@ jobs:
 
       - name: Restore dependencies
         run: dotnet restore
+        working-directory: TrianglePegGameSolver.Web
         
       - name: Find and Replace Google Analytics Tag
         uses: jacobtomlinson/gha-find-replace@v2
