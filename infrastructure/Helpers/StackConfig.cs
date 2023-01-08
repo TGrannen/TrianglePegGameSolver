@@ -12,7 +12,7 @@ public class StackConfig
         Token = PulumiConfig.Require("repo-token");
         Domain = PulumiConfig.Require("domain");
         Env = PulumiConfig.Require("env");
-        APILocation = PulumiConfig.Require("api-location");
+        APILocation = PulumiConfig.Get("api-location");
         NameBase = $"triangle-peg-game-{Env}";
     }
 
@@ -20,7 +20,7 @@ public class StackConfig
     public string Token { get; }
     public string Domain { get; }
     public string Env { get; }
-    public string APILocation { get; }
+    public string? APILocation { get; }
     public string? NameBase { get; }
     public Output<string> ResourceGroupName { get; set; }
     public GetClientConfigResult ClientConfig { get; set; }
