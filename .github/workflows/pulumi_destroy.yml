@@ -3,7 +3,7 @@ name: Pulumi-!!Destroy!!
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
+      stackName:
         description: 'Stack Name'
         required: true
         default: 'prod'
@@ -24,7 +24,7 @@ jobs:
       - uses: pulumi/actions@v3
         with:
           command: destroy
-          stack-name: ${{ secrets.PULUMI_ORG }}/triangle-peg-game/${{ inputs.logLevel }}
+          stack-name: ${{ secrets.PULUMI_ORG }}/triangle-peg-game/${{ inputs.stackName }}
           work-dir: ./infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

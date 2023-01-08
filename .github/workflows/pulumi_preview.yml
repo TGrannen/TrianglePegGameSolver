@@ -2,10 +2,13 @@ name: Pulumi-Preview
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - 'infrastructure/**'
+      - '.github/workflows/pulumi_preview_dev.yml'
   push:
     branches:
       - '**'
-      - '!dev'
       - '!main'
     paths:
       - 'infrastructure/**'
