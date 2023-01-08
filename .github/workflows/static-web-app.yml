@@ -7,9 +7,9 @@ on:
       - main
     paths:
       - '**'
-      - '.github/workflows/static-web-app.yml'
-      - '!.github/workflows/**'
       - '!infrastructure/**'
+      - '!.github/workflows/**'
+      - '.github/workflows/static-web-app.yml'
 
 jobs:
   build-and-deploy-prod:
