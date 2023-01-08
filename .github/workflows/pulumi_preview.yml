@@ -5,14 +5,14 @@ on:
   pull_request:
     paths:
       - 'infrastructure/**'
-      - '.github/workflows/pulumi_preview_dev.yml'
+      - '.github/workflows/pulumi_preview.yml'
   push:
     branches:
       - '**'
       - '!main'
     paths:
       - 'infrastructure/**'
-      - '.github/workflows/pulumi_preview_dev.yml'
+      - '.github/workflows/pulumi_preview.yml'
 
 jobs:
   preview:
