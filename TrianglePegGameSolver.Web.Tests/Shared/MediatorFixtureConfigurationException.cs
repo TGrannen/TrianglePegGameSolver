@@ -1,6 +1,6 @@
 using System;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared;
+namespace TrianglePegGameSolver.Web.Tests.Shared;
 
 public class MediatorFixtureConfigurationException : Exception
 {

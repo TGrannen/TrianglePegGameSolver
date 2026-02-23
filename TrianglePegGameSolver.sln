@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrianglePegGameSolver.Web", "TrianglePegGameSolver.Web\TrianglePegGameSolver.Web.csproj", "{F281BB8C-0FA3-44D1-BA4C-4D8EC3D396B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Application.UnitTests", "TrianglePegGameSolver.Application.UnitTests\TrianglePegGameSolver.Application.UnitTests.csproj", "{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Web.Tests", "TrianglePegGameSolver.Web.Tests\TrianglePegGameSolver.Web.Tests.csproj", "{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7BC18FA1-B2CB-4AFE-8C67-D522DD29E52C}"
 EndProject

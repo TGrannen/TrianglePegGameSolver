@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Extensions.Logging;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
+namespace TrianglePegGameSolver.Web.Tests.Shared.Logging;
 
 public abstract class SubstituteLogger : ILogger
 {

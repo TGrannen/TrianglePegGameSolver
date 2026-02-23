@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using TrianglePegGameSolver.Application.UnitTests.Shared;
+using TrianglePegGameSolver.Web.Tests.Shared;
 using TrianglePegGameSolver.Web.Application.Solver.Queries.SolvePegBoard;
 using TrianglePegGameSolver.Web.Domain;
 
-namespace TrianglePegGameSolver.Application.UnitTests;
+namespace TrianglePegGameSolver.Web.Tests;
 
 public class SolvePegBoardQueryTests
 {

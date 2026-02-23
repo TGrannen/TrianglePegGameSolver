@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
+namespace TrianglePegGameSolver.Web.Tests.Shared.Logging;
 
 public static class SubstituteLoggingInjectionExtensions
 {

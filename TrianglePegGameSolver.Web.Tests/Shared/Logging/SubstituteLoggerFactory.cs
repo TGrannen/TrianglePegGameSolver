@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
+namespace TrianglePegGameSolver.Web.Tests.Shared.Logging;
 
 internal class SubstituteLoggerFactory : ILoggerProvider
 {

@@ -1,6 +1,6 @@
 using TrianglePegGameSolver.Web.Application;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared;
+namespace TrianglePegGameSolver.Web.Tests.Shared;
 
 public class ApplicationFixture : MediatorFixture
 {

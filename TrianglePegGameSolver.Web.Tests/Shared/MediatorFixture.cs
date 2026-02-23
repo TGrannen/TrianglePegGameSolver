@@ -2,9 +2,9 @@ using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
+using TrianglePegGameSolver.Web.Tests.Shared.Logging;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared;
+namespace TrianglePegGameSolver.Web.Tests.Shared;
 
 public class MediatorFixture
 {
