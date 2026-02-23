@@ -53,25 +53,25 @@ return await Deployment.RunAsync(async () =>
 
     var site = new BlazorStaticWebApp { Config = config };
 
-    var budget = new AzureBudget
-    {
-        Config = config,
-        Amount = 3,
-        Notifications = new[]
-        {
-            new AzureBudgetNotification
-            {
-                Threshold = 80,
-                ThresholdType = ThresholdType.Actual,
-                Name = "Actual_GreaterThanOrEqual_80_Percent"
-            }
-        }
-    };
+    // var budget = new AzureBudget
+    // {
+    //     Config = config,
+    //     Amount = 3,
+    //     Notifications = new[]
+    //     {
+    //         new AzureBudgetNotification
+    //         {
+    //             Threshold = 80,
+    //             ThresholdType = ThresholdType.Actual,
+    //             Name = "Actual_GreaterThanOrEqual_80_Percent"
+    //         }
+    //     }
+    // };
 
     var objects = new[]
     {
         site.Create(),
-        budget.Create(),
+        // budget.Create(),
         new Dictionary<string, object?>
         {
             ["pagesUrl"] = pagesProject.Subdomain.Apply(s => $"https://{s}.pages.dev"),
