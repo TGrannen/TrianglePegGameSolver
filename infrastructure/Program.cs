@@ -28,6 +28,13 @@ return await Deployment.RunAsync(() =>
         ProjectName = pagesProject.Name,
         Domain = $"{subdomain}.{domain}",
     });
+    
+    var pagesDomain2 = new PagesDomain("triangle-peg-game-pages-domain-2", new PagesDomainArgs
+    {
+        AccountId = accountId,
+        ProjectName = pagesProject.Name,
+        Domain = $"{subdomain}.{comDomain}",
+    });
 
     var zoneSettings = new ZoneSettingsOverride("triangle-peg-game-zone-settings", new ZoneSettingsOverrideArgs
     {
