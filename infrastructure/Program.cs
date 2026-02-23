@@ -13,7 +13,7 @@ return await Deployment.RunAsync(async () =>
     const string subdomain = "trianglepeggame";
     const string pagesProjectName = "triangle-peg-game";
 
-    var zone = GetZone.Invoke(new GetZoneInvokeArgs { Name = domain });
+    // var zone = GetZone.Invoke(new GetZoneInvokeArgs { Name = domain });
 
     var pagesProject = new PagesProject("triangle-peg-game-page-project", new PagesProjectArgs
     {
