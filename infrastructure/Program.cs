@@ -26,7 +26,7 @@ return await Deployment.RunAsync(async () =>
         ProjectName = pagesProject.Name,
         Domain = $"{subdomain}.{domain}",
     });
-    
+
     var zoneSettings = new ZoneSettingsOverride("triangle-peg-game-zone-settings", new ZoneSettingsOverrideArgs
     {
         ZoneId = zone.Apply(z => z.Id),
@@ -43,17 +43,20 @@ return await Deployment.RunAsync(async () =>
         }
     });
 
-    var objects = new[]
+    _ = new Record("triangle-peg-game-front-end-dnsRecord", new RecordArgs
     {
-        // budget.Create(),
-        new Dictionary<string, object?>
-        {
-            ["pagesUrl"] = pagesProject.Subdomain.Apply(s => $"https://{s}.pages.dev"),
-            ["customDomainUrl"] = Output.Create($"https://{subdomain}.{domain}"),
-            ["pagesProjectName"] = pagesProject.Name,
-            ["accountId"] = accountId
-        }
-    };
+        ZoneId = zone.Apply(z => z.Id),
+        Name = subdomain,
+        Type = "CNAME",
+        Value = pagesProject.Subdomain,
+        Proxied = true
+    });
 
-    return objects.SelectMany(dict => dict).ToDictionary(pair => pair.Key, pair => pair.Value);
+    return new Dictionary<string, object?>
+    {
+        ["pagesUrl"] = pagesProject.Subdomain.Apply(s => $"https://{s}.pages.dev"),
+        ["customDomainUrl"] = Output.Create($"https://{subdomain}.{domain}"),
+        ["pagesProjectName"] = pagesProject.Name,
+        ["accountId"] = accountId
+    };
 });
