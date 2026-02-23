@@ -3,15 +3,17 @@ using Pulumi.Cloudflare.Inputs;
 using Config = Pulumi.Config;
 using Deployment = Pulumi.Deployment;
 
-return await Deployment.RunAsync(async () =>
+return await Deployment.RunAsync(() =>
 {
-    var fconfig = new Config("triangle-peg-game");
-    var accountId = fconfig.Require("accountId");
-    var domain = fconfig.Require("domain");
+    var config = new Config("triangle-peg-game");
+    var accountId = config.Require("accountId");
+    var domain = config.Require("domain");
+    var comDomain = config.Require("com-domain");
     const string subdomain = "trianglepeggame";
     const string pagesProjectName = "triangle-peg-game";
 
     var zone = GetZone.Invoke(new GetZoneInvokeArgs { Name = domain });
+    var comZone = GetZone.Invoke(new GetZoneInvokeArgs { Name = comDomain });
 
     var pagesProject = new PagesProject("triangle-peg-game-page-project", new PagesProjectArgs
     {
@@ -51,12 +53,20 @@ return await Deployment.RunAsync(async () =>
         Value = pagesProject.Subdomain,
         Proxied = true
     });
+    _ = new Record("triangle-peg-game-front-end-dnsRecord-2", new RecordArgs
+    {
+        ZoneId = comZone.Apply(z => z.Id),
+        Name = subdomain,
+        Type = "CNAME",
+        Value = pagesProject.Subdomain,
+        Proxied = true
+    });
 
-    return new Dictionary<string, object?>
+    return Task.FromResult<IDictionary<string, object?>>(new Dictionary<string, object?>
     {
         ["pagesUrl"] = pagesProject.Subdomain.Apply(s => $"https://{s}.pages.dev"),
         ["customDomainUrl"] = Output.Create($"https://{subdomain}.{domain}"),
         ["pagesProjectName"] = pagesProject.Name,
         ["accountId"] = accountId
-    };
+    });
 });

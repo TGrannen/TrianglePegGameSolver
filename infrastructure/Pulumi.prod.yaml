@@ -1,6 +1,7 @@
 config:
   triangle-peg-game:accountId: 065a742476d1e090238121f1352f9f5f
   triangle-peg-game:domain: grannen.dev
+  triangle-peg-game:com-domain: grannendev.com
   cloudflare:apiToken:
     secure: AAABAIRQh63a2b23j35OJKponWxyym9tjYxzfciTf/+FCQzzH6XhMxIjhkq7HsMB0Ywy3Iuc0oayrJZYHugSHTvT2qDXLJiO
   triangle-peg-game:env: prod
