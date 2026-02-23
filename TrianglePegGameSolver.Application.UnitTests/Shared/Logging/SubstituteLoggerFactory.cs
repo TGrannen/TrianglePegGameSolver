@@ -1,39 +1,38 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared.Logging
+namespace TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
+
+internal class SubstituteLoggerFactory : ILoggerProvider
 {
-    internal class SubstituteLoggerFactory : ILoggerProvider
+    private readonly Dictionary<string, SubstituteLogger> _loggers = new Dictionary<string, SubstituteLogger>();
+
+    public ILogger CreateLogger(string categoryName)
     {
-        private readonly Dictionary<string, SubstituteLogger> _loggers = new Dictionary<string, SubstituteLogger>();
-
-        public ILogger CreateLogger(string categoryName)
+        if (!_loggers.ContainsKey(categoryName))
         {
-            if (!_loggers.ContainsKey(categoryName))
-            {
-                var mockLogger = Substitute.For<SubstituteLogger>();
-                _loggers.Add(categoryName, mockLogger);
-            }
-
-            return _loggers[categoryName];
+            var mockLogger = Substitute.For<SubstituteLogger>();
+            _loggers.Add(categoryName, mockLogger);
         }
 
-        public void Dispose()
+        return _loggers[categoryName];
+    }
+
+    public void Dispose()
+    {
+    }
+
+    public SubstituteLogger GetLogger<T>()
+    {
+        var fullName = typeof(T).FullName ?? throw new TypeAccessException("Couldn't get Generic type name");
+
+        if (!_loggers.ContainsKey(fullName))
         {
+            throw new ArgumentException("No Logger Exists in dictionary");
         }
 
-        public SubstituteLogger GetLogger<T>()
-        {
-            var fullName = typeof(T).FullName ?? throw new TypeAccessException("Couldn't get Generic type name");
-
-            if (!_loggers.ContainsKey(fullName))
-            {
-                throw new ArgumentException("No Logger Exists in dictionary");
-            }
-
-            return _loggers[fullName];
-        }
+        return _loggers[fullName];
     }
 }

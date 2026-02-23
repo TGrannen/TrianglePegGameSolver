@@ -1,19 +1,11 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TrianglePegGameSolver.Web", "TrianglePegGameSolver.Web\TrianglePegGameSolver.Web.csproj", "{F281BB8C-0FA3-44D1-BA4C-4D8EC3D396B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Domain", "TrianglePegGameSolver.Domain\TrianglePegGameSolver.Domain.csproj", "{C674219C-01F1-415C-B78C-8F83DB183FF3}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Application", "TrianglePegGameSolver.Application\TrianglePegGameSolver.Application.csproj", "{3C0B90F4-E75A-4A76-99E3-671947F18831}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TrianglePegGameSolver.Application.UnitTests", "TrianglePegGameSolver.Application.UnitTests\TrianglePegGameSolver.Application.UnitTests.csproj", "{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LegacyTrianglePegGame", "Legacy\LegacyTrianglePegGame\LegacyTrianglePegGame.csproj", "{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Legacy", "Legacy", "{91AEE7B0-FC19-485E-9DF9-1B3FDAE5C581}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{7BC18FA1-B2CB-4AFE-8C67-D522DD29E52C}"
 EndProject
@@ -29,22 +21,10 @@ Global
 		{F281BB8C-0FA3-44D1-BA4C-4D8EC3D396B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F281BB8C-0FA3-44D1-BA4C-4D8EC3D396B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F281BB8C-0FA3-44D1-BA4C-4D8EC3D396B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C674219C-01F1-415C-B78C-8F83DB183FF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C674219C-01F1-415C-B78C-8F83DB183FF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C674219C-01F1-415C-B78C-8F83DB183FF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C674219C-01F1-415C-B78C-8F83DB183FF3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3C0B90F4-E75A-4A76-99E3-671947F18831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3C0B90F4-E75A-4A76-99E3-671947F18831}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3C0B90F4-E75A-4A76-99E3-671947F18831}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3C0B90F4-E75A-4A76-99E3-671947F18831}.Release|Any CPU.Build.0 = Release|Any CPU
 		{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{62D2E935-E478-44AA-85A6-DBB2BC19C7EB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -54,7 +34,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{985BFE16-5D9D-41F5-8BB1-F1D94A6F8DAA} = {91AEE7B0-FC19-485E-9DF9-1B3FDAE5C581}
 		{512001B1-A9A6-4DD2-A521-ED91D0D2D79F} = {7BC18FA1-B2CB-4AFE-8C67-D522DD29E52C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

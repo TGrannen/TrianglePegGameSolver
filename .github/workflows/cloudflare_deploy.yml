@@ -1,0 +1,60 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - 'TrianglePegGameSolver.Web/**'
+      - 'TrianglePegGameSolver.Application/**'
+      - 'TrianglePegGameSolver.Domain/**'
+      - 'Legacy/**'
+      - '.github/workflows/cloudflare_deploy.yml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: triangle-peg-game / production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Install wasm-tools workload
+        run: dotnet workload install wasm-tools
+
+      - name: Find and Replace Google Analytics Tag
+        uses: jacobtomlinson/gha-find-replace@v2
+        with:
+          find: "TODO_GOOGLE_TAG"
+          replace: ${{ secrets.GOOGLE_ANALYTICS_TAG }}
+          include: "TrianglePegGameSolver.Web/wwwroot/appsettings.json"
+          regex: false
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Install NPM packages
+        run: npm install
+        working-directory: TrianglePegGameSolver.Web
+
+      - name: Build
+        run: dotnet build TrianglePegGameSolver.Web/TrianglePegGameSolver.Web.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish TrianglePegGameSolver.Web/TrianglePegGameSolver.Web.csproj -c Release --no-restore
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: triangle-peg-game
+          directory: ./TrianglePegGameSolver.Web/bin/Release/net9.0/publish/wwwroot
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}

@@ -1,3 +1,4 @@
+# LEGACY: Remove this file after Cloudflare Pages is verified and you no longer need Azure Static Web Apps.
 name: Azure Static Web Apps CI/CD
 
 on:
@@ -16,13 +17,16 @@ jobs:
     name: Deploy Frontend
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         name: Checkout Source code
 
-      - name: Setup .NET 5
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 9.0.x
+
+      - name: Install wasm-tools workload
+        run: dotnet workload install wasm-tools
 
       - name: Restore dependencies
         run: dotnet restore
@@ -37,20 +41,19 @@ jobs:
           regex: false
 
       - name: Setup Node.js environment (for Tailwind)
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v4
 
       - name: npm install
         run: npm install
         working-directory: TrianglePegGameSolver.Web
 
       - name: Build
-        run: dotnet build --no-restore
-        working-directory: TrianglePegGameSolver.Web
+        run: dotnet build TrianglePegGameSolver.Web/TrianglePegGameSolver.Web.csproj -c Release --no-restore
 
       - name: Publish Client
-        run: dotnet publish --configuration release --no-restore --output temp
+        run: dotnet publish TrianglePegGameSolver.Web/TrianglePegGameSolver.Web.csproj -c Release --no-restore --output temp
         working-directory: TrianglePegGameSolver.Web
-        
+
       - name: Delete extra BR files
         working-directory: TrianglePegGameSolver.Web/temp/wwwroot
         run: find . -name '*.br' -delete
@@ -65,7 +68,7 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
           action: "upload"
           ###### Repository/Build Configurations ######
-          app_location: "TrianglePegGameSolver.Web/temp/wwwroot" # App source code path relative to repository root
+          app_location: "TrianglePegGameSolver.Web/temp/wwwroot"
           output_location: ""
           skip_app_build: true
           ###### End of Repository/Build Configurations ######

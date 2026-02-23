@@ -1,13 +1,14 @@
-namespace TrianglePegGameSolver.Application.UnitTests.Shared
+using TrianglePegGameSolver.Web.Application;
+
+namespace TrianglePegGameSolver.Application.UnitTests.Shared;
+
+public class ApplicationFixture : MediatorFixture
 {
-    public class ApplicationFixture : MediatorFixture
+    public ApplicationFixture()
     {
-        public ApplicationFixture()
+        OnConfigureServices += (_, services) =>
         {
-            OnConfigureServices += (_, services) =>
-            {
-                services.AddApplication();
-            };
-        }
+            services.AddApplication();
+        };
     }
 }

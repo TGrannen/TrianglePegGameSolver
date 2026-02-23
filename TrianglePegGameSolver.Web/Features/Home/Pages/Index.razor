@@ -1,17 +1,15 @@
-﻿@inherits FluxorComponent
+@inherits FluxorComponent
 @page "/"
 @page "/Solve"
 @using TrianglePegGameSolver.Web.Features.PegBoard.Components
 @using TrianglePegGameSolver.Web.Features.Home.Components
-@using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard
-@using TrianglePegGameSolver.Domain
 @using TrianglePegGameSolver.Web.Features.Home.Store
 @using TrianglePegGameSolver.Web.Features.Home.Store.Actions
 
 @inject IDispatcher _dispatcher
 @inject IState<SolveState> _state
 
-<PageTitle Title="Triangle Peg Game - Solve"/>
+<DocTitle Title="Triangle Peg Game - Solve"/>
 
 <h1 class="text-3xl font-bold text-gray-900">
     Solve

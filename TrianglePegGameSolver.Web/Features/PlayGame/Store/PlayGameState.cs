@@ -1,36 +1,35 @@
 ﻿using Fluxor;
 using System.Collections.Generic;
-using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard;
-using TrianglePegGameSolver.Domain;
+using TrianglePegGameSolver.Web.Application.Solver.Queries.SolvePegBoard;
+using TrianglePegGameSolver.Web.Domain;
 
-namespace TrianglePegGameSolver.Web.Features.PlayGame.Store
+namespace TrianglePegGameSolver.Web.Features.PlayGame.Store;
+
+public record PlayGameState
 {
-    public record PlayGameState
-    {
-        public Domain.PegBoard Board { get; init; }
-        public Stack<PegMoveWithBoard> Moves { get; init; }
-        public PegHole From { get; init; }
-        public PegHole To { get; init; }
-        public bool StartingHoleSelected { get; init; }
-        public bool ShowPegNumbers { get; init; }
-        public int AvailableMoves { get; init; } = -1;
-    }
+    public Domain.PegBoard Board { get; init; }
+    public Stack<PegMoveWithBoard> Moves { get; init; }
+    public PegHole From { get; init; }
+    public PegHole To { get; init; }
+    public bool StartingHoleSelected { get; init; }
+    public bool ShowPegNumbers { get; init; }
+    public int AvailableMoves { get; init; } = -1;
+}
 
-    public class PlayGameFeature : Feature<PlayGameState>
-    {
-        public override string GetName() => "PlayGame";
+public class PlayGameFeature : Feature<PlayGameState>
+{
+    public override string GetName() => "PlayGame";
 
-        protected override PlayGameState GetInitialState()
+    protected override PlayGameState GetInitialState()
+    {
+        return new PlayGameState
         {
-            return new PlayGameState
-            {
-                Board = new Domain.PegBoard(),
-                Moves = new Stack<PegMoveWithBoard>(),
-                From = null,
-                To = null,
-                StartingHoleSelected = false,
-                ShowPegNumbers = false
-            };
-        }
+            Board = new Domain.PegBoard(),
+            Moves = new Stack<PegMoveWithBoard>(),
+            From = null,
+            To = null,
+            StartingHoleSelected = false,
+            ShowPegNumbers = false
+        };
     }
 }

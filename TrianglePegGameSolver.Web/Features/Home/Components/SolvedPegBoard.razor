@@ -1,9 +1,10 @@
 ﻿@inherits FluxorComponent
-@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using TrianglePegGameSolver.Web.Domain
 @using TrianglePegGameSolver.Web.Features.PegBoard.Models
-@using TrianglePegGameSolver.Domain
 @using TrianglePegGameSolver.Web.Features.Home.Store
 @using TrianglePegGameSolver.Web.Features.Home.Store.Actions
+@using TrianglePegGameSolver.Web.Features.PegBoard.Components
+@using PegBoard = TrianglePegGameSolver.Web.Features.PegBoard.Components.PegBoard
 
 @inject IDispatcher _dispatcher
 @inject IState<SolveState> _state

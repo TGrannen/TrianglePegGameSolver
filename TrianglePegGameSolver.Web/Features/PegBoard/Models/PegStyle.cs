@@ -1,10 +1,9 @@
-﻿namespace TrianglePegGameSolver.Web.Features.PegBoard.Models
+﻿namespace TrianglePegGameSolver.Web.Features.PegBoard.Models;
+
+public enum PegStyle
 {
-    public enum PegStyle
-    {
-        Filled,
-        Empty,
-        ToBeRemoved,
-        Selected
-    }
+    Filled,
+    Empty,
+    ToBeRemoved,
+    Selected
 }

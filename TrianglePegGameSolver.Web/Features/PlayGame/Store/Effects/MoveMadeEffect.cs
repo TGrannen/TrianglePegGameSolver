@@ -3,36 +3,35 @@ using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
-using TrianglePegGameSolver.Application.Play.Queries.GetAvailableMoves;
+using TrianglePegGameSolver.Web.Application.Play.Queries.GetAvailableMoves;
 
-namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Effects
+namespace TrianglePegGameSolver.Web.Features.PlayGame.Store.Effects;
+
+public class MoveMadeEffect : Effect<MoveMadeAction>
 {
-    public class MoveMadeEffect : Effect<MoveMadeAction>
+    private readonly ILogger<MoveMadeEffect> _logger;
+    private readonly IMediator _mediator;
+
+    public MoveMadeEffect(ILogger<MoveMadeEffect> logger, IMediator mediator)
     {
-        private readonly ILogger<MoveMadeEffect> _logger;
-        private readonly IMediator _mediator;
+        _logger = logger;
+        _mediator = mediator;
+    }
 
-        public MoveMadeEffect(ILogger<MoveMadeEffect> logger, IMediator mediator)
+    public override async Task HandleAsync(MoveMadeAction action, IDispatcher dispatcher)
+    {
+        try
         {
-            _logger = logger;
-            _mediator = mediator;
+            var result = await _mediator.Send(new GetAvailableMovesQuery
+            {
+                Board = action.NewBoard
+            });
+
+            dispatcher.Dispatch(new SetAvailableMovesAction { MoveCount = result });
         }
-
-        public override async Task HandleAsync(MoveMadeAction action, IDispatcher dispatcher)
+        catch (Exception e)
         {
-            try
-            {
-                var result = await _mediator.Send(new GetAvailableMovesQuery
-                {
-                    Board = action.NewBoard
-                });
-
-                dispatcher.Dispatch(new SetAvailableMovesAction { MoveCount = result });
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Error getting Available moves, reason: {e.Message}");
-            }
+            _logger.LogError($"Error getting Available moves, reason: {e.Message}");
         }
     }
 }

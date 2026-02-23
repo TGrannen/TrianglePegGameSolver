@@ -1,104 +1,103 @@
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using System.Threading.Tasks;
-using TrianglePegGameSolver.Application.Solver.Queries.SolvePegBoard;
 using TrianglePegGameSolver.Application.UnitTests.Shared;
-using TrianglePegGameSolver.Domain;
+using TrianglePegGameSolver.Web.Application.Solver.Queries.SolvePegBoard;
+using TrianglePegGameSolver.Web.Domain;
 
-namespace TrianglePegGameSolver.Application.UnitTests
+namespace TrianglePegGameSolver.Application.UnitTests;
+
+public class SolvePegBoardQueryTests
 {
-    public class SolvePegBoardQueryTests
+    private ApplicationFixture _appFixture;
+
+    [SetUp]
+    public void Setup()
     {
-        private ApplicationFixture _appFixture;
+        _appFixture = new ApplicationFixture();
+    }
 
-        [SetUp]
-        public void Setup()
+    [Test]
+    public async Task ShouldHaveBoardsOnMoves_WhenTheBoardIsFilled()
+    {
+        var pegBoard = new PegBoard();
+        pegBoard.Holes[0].Filled = false;
+
+        var result = await _appFixture.SendAsync(new SolvePegBoardQuery
         {
-            _appFixture = new ApplicationFixture();
-        }
+            PegBoard = pegBoard,
+        });
 
-        [Test]
-        public async Task ShouldHaveBoardsOnMoves_WhenTheBoardIsFilled()
+        result.Should().NotBeNull();
+        result.Moves.Should().NotBeNullOrEmpty();
+        result.Moves.ForEach(x => x.Board.Should().NotBeNull());
+    }
+
+    [Test]
+    public async Task ShouldIndicateSuccessfulSolve_WhenBoardIsFilled()
+    {
+        var pegBoard = new PegBoard();
+        pegBoard.Holes[0].Filled = false;
+
+        var result = await _appFixture.SendAsync(new SolvePegBoardQuery
         {
-            var pegBoard = new PegBoard();
-            pegBoard.Holes[0].Filled = false;
+            PegBoard = pegBoard,
+        });
 
-            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
-            {
-                PegBoard = pegBoard,
-            });
+        result.Should().NotBeNull();
+        result.SuccessfullySolved.Should().BeTrue();
+    }
 
-            result.Should().NotBeNull();
-            result.Moves.Should().NotBeNullOrEmpty();
-            result.Moves.ForEach(x => x.Board.Should().NotBeNull());
-        }
+    [Test]
+    public async Task ShouldReturnTheCorrectNumberOfMoves_WhenTheBoardIsFilled()
+    {
+        var pegBoard = new PegBoard();
+        pegBoard.Holes[0].Filled = false;
 
-        [Test]
-        public async Task ShouldIndicateSuccessfulSolve_WhenBoardIsFilled()
+        var result = await _appFixture.SendAsync(new SolvePegBoardQuery
         {
-            var pegBoard = new PegBoard();
-            pegBoard.Holes[0].Filled = false;
+            PegBoard = pegBoard,
+        });
 
-            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
-            {
-                PegBoard = pegBoard,
-            });
+        result.Should().NotBeNull();
+        result.Moves.Should().NotBeNullOrEmpty();
+        result.Moves.Should().HaveCount(13);
+    }
 
-            result.Should().NotBeNull();
-            result.SuccessfullySolved.Should().BeTrue();
-        }
+    [Test]
+    public async Task ShouldReturnWithFailedToSolve_WhenTheBoardIsUnSolvable()
+    {
+        var pegBoard = new PegBoard();
+        pegBoard.Holes.ForEach(x => x.Filled = false);
+        pegBoard.Holes[2].Filled = true;
+        pegBoard.Holes[3].Filled = true;
+        pegBoard.Holes[12].Filled = true;
+        pegBoard.Holes[14].Filled = true;
 
-        [Test]
-        public async Task ShouldReturnTheCorrectNumberOfMoves_WhenTheBoardIsFilled()
+        var result = await _appFixture.SendAsync(new SolvePegBoardQuery
         {
-            var pegBoard = new PegBoard();
-            pegBoard.Holes[0].Filled = false;
+            PegBoard = pegBoard,
+        });
 
-            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
-            {
-                PegBoard = pegBoard,
-            });
+        result.Should().NotBeNull();
+        result.Moves.Should().BeEmpty();
+        result.SuccessfullySolved.Should().BeFalse();
+    }
 
-            result.Should().NotBeNull();
-            result.Moves.Should().NotBeNullOrEmpty();
-            result.Moves.Should().HaveCount(13);
-        }
+    [Test]
+    public async Task ShouldReturnSolvedMoves_WhenBoardIsInProgress()
+    {
+        var pegBoard = new PegBoard();
+        pegBoard.Holes[7].Filled = false;
+        pegBoard.Holes[11].Filled = false;
 
-        [Test]
-        public async Task ShouldReturnWithFailedToSolve_WhenTheBoardIsUnSolvable()
+        var result = await _appFixture.SendAsync(new SolvePegBoardQuery
         {
-            var pegBoard = new PegBoard();
-            pegBoard.Holes.ForEach(x => x.Filled = false);
-            pegBoard.Holes[2].Filled = true;
-            pegBoard.Holes[3].Filled = true;
-            pegBoard.Holes[12].Filled = true;
-            pegBoard.Holes[14].Filled = true;
+            PegBoard = pegBoard,
+        });
 
-            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
-            {
-                PegBoard = pegBoard,
-            });
-
-            result.Should().NotBeNull();
-            result.Moves.Should().BeEmpty();
-            result.SuccessfullySolved.Should().BeFalse();
-        }
-
-        [Test]
-        public async Task ShouldReturnSolvedMoves_WhenBoardIsInProgress()
-        {
-            var pegBoard = new PegBoard();
-            pegBoard.Holes[7].Filled = false;
-            pegBoard.Holes[11].Filled = false;
-
-            var result = await _appFixture.SendAsync(new SolvePegBoardQuery
-            {
-                PegBoard = pegBoard,
-            });
-
-            result.Should().NotBeNull();
-            result.Moves.Should().NotBeNullOrEmpty();
-            result.Moves.Should().HaveCount(12);
-        }
+        result.Should().NotBeNull();
+        result.Moves.Should().NotBeNullOrEmpty();
+        result.Moves.Should().HaveCount(12);
     }
 }

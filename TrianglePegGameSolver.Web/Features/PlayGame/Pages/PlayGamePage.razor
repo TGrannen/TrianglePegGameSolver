@@ -1,4 +1,4 @@
-﻿@inherits FluxorComponent
+@inherits FluxorComponent
 @page "/Play"
 @using TrianglePegGameSolver.Web.Features.PlayGame.Components
 @using TrianglePegGameSolver.Web.Features.PlayGame.Store
@@ -8,7 +8,7 @@
 @inject IState<PlayGameState> _state
 @inject NavigationManager _navigationManager
 
-<PageTitle Title="Triangle Peg Game - Play"/>
+<DocTitle Title="Triangle Peg Game - Play"/>
 
 <h1 class="text-3xl font-bold text-gray-900">
     Play
@@ -59,7 +59,7 @@
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        _state.StateChanged += (sender, state) => { _showOutOfMovesModal = state.AvailableMoves == 0 && state.StartingHoleSelected; };
+        _state.StateChanged += (sender, _) => { _showOutOfMovesModal = _state.Value.AvailableMoves == 0 && _state.Value.StartingHoleSelected; };
     }
 
     private void UndoMove()

@@ -1,42 +1,41 @@
-using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using TrianglePegGameSolver.Application.UnitTests.Shared.Logging;
 
-namespace TrianglePegGameSolver.Application.UnitTests.Shared
+namespace TrianglePegGameSolver.Application.UnitTests.Shared;
+
+public class MediatorFixture
 {
-    public class MediatorFixture
+    public EventHandler<IServiceCollection> OnConfigureServices { get; set; }
+    public ServiceProvider Provider { get; private set; }
+
+    protected ServiceCollection Services { get; } = new ServiceCollection();
+
+    public SubstituteLogger GetLogger<T>()
     {
-        public EventHandler<IServiceCollection> OnConfigureServices { get; set; }
-        public ServiceProvider Provider { get; private set; }
+        var mockedLoggerFactory = Provider.GetService<SubstituteLoggerFactory>();
+        var mockLogger = mockedLoggerFactory.GetLogger<T>();
+        return mockLogger;
+    }
 
-        protected ServiceCollection Services { get; } = new ServiceCollection();
-
-        public SubstituteLogger GetLogger<T>()
+    public async Task<T> SendAsync<T>(IRequest<T> request)
+    {
+        if (Provider == null)
         {
-            var mockedLoggerFactory = Provider.GetService<SubstituteLoggerFactory>();
-            var mockLogger = mockedLoggerFactory.GetLogger<T>();
-            return mockLogger;
+            Services.AddSubstitutedLogging();
+            OnConfigureServices?.Invoke(this, Services);
+            Provider = Services.BuildServiceProvider();
         }
 
-        public async Task<T> SendAsync<T>(IRequest<T> request)
+        var mediator = Provider.GetService<IMediator>();
+
+        if (mediator == null)
         {
-            if (Provider == null)
-            {
-                Services.AddSubstitutedLogging();
-                OnConfigureServices?.Invoke(this, Services);
-                Provider = Services.BuildServiceProvider();
-            }
-
-            var mediator = Provider.GetService<IMediator>();
-
-            if (mediator == null)
-            {
-                throw new MediatorFixtureConfigurationException();
-            }
-
-            return await mediator.Send(request);
+            throw new MediatorFixtureConfigurationException();
         }
+
+        return await mediator.Send(request);
     }
 }

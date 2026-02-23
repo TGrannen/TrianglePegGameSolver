@@ -1,6 +1,3 @@
 name: triangle-peg-game
 runtime: dotnet
 description: Blazor WASM PWA to show how to solve the Triangle Peg Game
-config:
-  azure-native:location: EastUS2
-  repo-name: TGrannen/TrianglePegGameSolver
