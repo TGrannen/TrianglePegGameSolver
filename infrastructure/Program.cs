@@ -22,28 +22,28 @@ return await Deployment.RunAsync(async () =>
         ProductionBranch = "main",
     });
 
-    var pagesDomain = new PagesDomain("triangle-peg-game-pages-domain", new PagesDomainArgs
-    {
-        AccountId = accountId,
-        ProjectName = pagesProject.Name,
-        Domain = $"{subdomain}.{domain}",
-    });
-
-    var zoneSettings = new ZoneSettingsOverride("triangle-peg-game-zone-settings", new ZoneSettingsOverrideArgs
-    {
-        ZoneId = zone.Apply(z => z.Id),
-        Settings = new ZoneSettingsOverrideSettingsArgs
-        {
-            Minify = new ZoneSettingsOverrideSettingsMinifyArgs
-            {
-                Css = "off",
-                Html = "off",
-                Js = "off"
-            },
-            RocketLoader = "off",
-            AlwaysUseHttps = "on"
-        }
-    });
+    // var pagesDomain = new PagesDomain("triangle-peg-game-pages-domain", new PagesDomainArgs
+    // {
+    //     AccountId = accountId,
+    //     ProjectName = pagesProject.Name,
+    //     Domain = $"{subdomain}.{domain}",
+    // });
+    //
+    // var zoneSettings = new ZoneSettingsOverride("triangle-peg-game-zone-settings", new ZoneSettingsOverrideArgs
+    // {
+    //     ZoneId = zone.Apply(z => z.Id),
+    //     Settings = new ZoneSettingsOverrideSettingsArgs
+    //     {
+    //         Minify = new ZoneSettingsOverrideSettingsMinifyArgs
+    //         {
+    //             Css = "off",
+    //             Html = "off",
+    //             Js = "off"
+    //         },
+    //         RocketLoader = "off",
+    //         AlwaysUseHttps = "on"
+    //     }
+    // });
 
     var clientConfig = await GetClientConfig.InvokeAsync();
     var config = new StackConfig { ClientConfig = clientConfig };
